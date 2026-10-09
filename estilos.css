@@ -1,0 +1,250 @@
+/* ── 1. RESET ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
+
+/* ── 2. VARIABLES: paleta azul eléctrico ───────────────────────────────── */
+:root {
+  --color-principal:  #0b1f4d; /* Azul noche (títulos, tabla) */
+  --color-acento:     #1f5bff; /* Azul eléctrico */
+  --color-acento-2:   #00b4ff; /* Celeste cian para degradados */
+  --color-acento-osc: #1244d6; /* Hover del azul eléctrico */
+  --color-texto:      #1b2540;
+  --color-suave:      #5b6786;
+  --color-fondo:      #eef3ff;
+  --color-superficie: #ffffff;
+  --borde:            #d5def5;
+
+  --espacio:    1rem;
+  --espacio-lg: 2rem;
+  --radio:      14px;
+  --sombra:     0 8px 24px rgba(31, 91, 255, .12);
+}
+
+/* ── 3. TIPOGRAFÍA ─────────────────────────────────────────────────────── */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-texto);
+  background: var(--color-fondo);
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  color: var(--color-principal);
+  text-align: center;           /* títulos centrados */
+}
+h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); margin: 0 0 .4rem; color: #fff; }
+h2 { font-size: 1.7rem; margin: 0 0 1.25rem; }
+h3 { font-size: 1.15rem; margin-top: 0; }
+
+p { max-width: 65ch; }
+
+/* Contenido centrado dentro de cada bloque */
+main, aside, footer > * { max-width: 60rem; margin-inline: auto; }
+main { padding: 0 var(--espacio); }
+section { padding: var(--espacio-lg) 0; }
+
+/* ── 4. ENLACES ────────────────────────────────────────────────────────── */
+a { color: var(--color-acento); text-underline-offset: 2px; }
+a:hover { color: var(--color-acento-osc); }
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--color-acento-2);
+  outline-offset: 2px;
+}
+
+/* ── 5. HEADER Y BOTONES DE NAVEGACIÓN ─────────────────────────────────── */
+header {
+  text-align: center;
+  padding: 3rem var(--espacio) 2.5rem;
+  color: #dbe6ff;
+  background: linear-gradient(135deg, #0b1f4d 0%, #1244d6 55%, #1f5bff 100%);
+  border-bottom: 4px solid var(--color-acento-2);
+}
+header p { margin: 0 auto; font-size: 1.1rem; }
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .75rem;
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: .6rem 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255, 255, 255, .12);
+  border: 2px solid rgba(255, 255, 255, .55);
+  border-radius: 999px;
+  transition: background .2s, color .2s, transform .2s, box-shadow .2s;
+}
+.boton:hover {
+  background: #fff;
+  color: var(--color-acento);
+  transform: translateY(-2px);
+}
+.boton-principal {
+  background: var(--color-acento-2);
+  border-color: var(--color-acento-2);
+  color: var(--color-principal);
+  box-shadow: 0 6px 18px rgba(0, 180, 255, .45);
+}
+.boton-principal:hover { background: #fff; border-color: #fff; color: var(--color-acento); }
+
+/* ── 6. SERVICIOS (tarjetas) ───────────────────────────────────────────── */
+#servicios { display: grid; gap: var(--espacio); }
+#servicios h2 { margin-bottom: .25rem; }
+
+article {
+  background: var(--color-superficie);
+  border: 1px solid var(--borde);
+  border-top: 4px solid var(--color-acento);
+  border-radius: var(--radio);
+  padding: 1.25rem;
+  box-shadow: var(--sombra);
+  text-align: center;
+}
+article p { margin-inline: auto; }
+
+@media (min-width: 48rem) {
+  #servicios { grid-template-columns: repeat(3, 1fr); }
+  #servicios h2 { grid-column: 1 / -1; }
+}
+
+/* ── 7. TABLA ──────────────────────────────────────────────────────────── */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  background: var(--color-superficie);
+  border-radius: var(--radio);
+  overflow: hidden;
+  box-shadow: var(--sombra);
+}
+caption {
+  text-align: center;
+  color: var(--color-suave);
+  padding-bottom: .75rem;
+}
+th, td {
+  text-align: center;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--borde);
+}
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: var(--color-fondo); }
+th { background: var(--color-acento); color: #fff; }
+
+/* ── 8. IMÁGENES CENTRADAS ─────────────────────────────────────────────── */
+img { display: block; max-width: 100%; height: auto; margin-inline: auto; }
+
+figure {
+  margin: 2rem auto 0;
+  text-align: center;
+}
+figure img {
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+figcaption {
+  margin-top: .6rem;
+  color: var(--color-suave);
+  font-size: .95rem;
+}
+
+/* ── 9. FORMULARIO ─────────────────────────────────────────────────────── */
+form {
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 1.25rem;
+  background: var(--color-superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+fieldset {
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: var(--espacio);
+  margin: 0 0 var(--espacio);
+}
+legend {
+  padding: 0 .5rem;
+  font-weight: 700;
+  color: var(--color-acento);
+}
+label { display: block; margin-bottom: .25rem; font-weight: 500; }
+input, select, textarea {
+  font-size: 1rem;
+  font-family: inherit;
+  padding: .6rem .75rem;
+  width: 100%;
+  background: #f8faff;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--color-acento); background: #fff; }
+input[type="checkbox"] { width: auto; display: inline-block; }
+input[type="checkbox"] + label { display: inline; margin-left: .4rem; }
+
+button {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: inherit;
+  padding: .7rem 1.5rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-2));
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(31, 91, 255, .4);
+  transition: transform .2s, box-shadow .2s;
+}
+button:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(31, 91, 255, .5); }
+
+/* ── 10. ASIDE Y FOOTER ────────────────────────────────────────────────── */
+aside {
+  margin: var(--espacio-lg) auto;
+  padding: 1.5rem;
+  width: calc(100% - 2rem);
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-principal), var(--color-acento));
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+aside h2 { color: #fff; margin-bottom: .5rem; }
+aside p { margin-inline: auto; }
+
+footer {
+  margin-top: var(--espacio-lg);
+  padding: var(--espacio-lg) var(--espacio);
+  text-align: center;
+  color: #c9d6f5;
+  background: var(--color-principal);
+}
+footer h2 { color: #fff; }
+footer address { font-style: normal; }
+footer figure { margin: 0 auto 1rem; }
+footer p { margin-inline: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
