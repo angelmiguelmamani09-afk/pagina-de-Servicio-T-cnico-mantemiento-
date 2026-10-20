@@ -33,6 +33,22 @@ También indica cómo llegar al taller.
   `system-ui`: carga rápido, no depende de fuentes externas y se ve nativa en
   cada dispositivo.
 
+- **JavaScript (`app.js`):** demo del Día 5, enlazado con `defer` en el `head`.
+  Usa `const` y `let`, tipos (`typeof`, `null` y `undefined`), template literals
+  y comparación con `===`. Al cargar, cambia con `querySelector` y `textContent`
+  el subtítulo del `header` para mostrar los equipos en el taller; los demás
+  resultados se ven en la consola (F12).
+- **JavaScript (`funciones.js`):** práctica de coerción, valores falsy,
+  control de flujo (`if`, ternario, `for...of`), las tres formas de escribir una
+  función, arrow functions con parámetro por defecto, funciones como valores
+  (`aplicarATodos`) y closures (`crearContador`). Se enlaza con `defer` después
+  de `app.js` y su resultado se ve en la consola (F12).
+- **JavaScript (`datos.js`):** práctica de objetos literales, destructuring y
+  spread, un arreglo de objetos con el catálogo de servicios, repuestos y
+  accesorios, los métodos `forEach`, `map`, `filter`, `find`, `some`, `every`,
+  `sort` y `reduce` (solos y encadenados) y clases con herencia (`Producto` y
+  `ProductoConDescuento`). Se enlaza con `defer` después de `funciones.js`.
+
 ## Capturas
 ![Escritorio](capturas/captura-escritorio.png)
 ![Móvil 375px](capturas/captura-movil.png)
