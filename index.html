@@ -6,9 +6,6 @@
     <meta name="description" content="Servicio técnico especializado en computadoras y laptops. Mantenimiento y reparación desde 2018.">
     <title>TecnoFix - Servicio Técnico</title>
     <link rel="stylesheet" href="estilos.css">
-    <script src="app.js" defer></script>
-    <script src="funciones.js" defer></script>
-    <script src="datos.js" defer></script>
   </head>
   <body>
 
@@ -18,128 +15,135 @@
       <p>Soluciones informáticas y mantenimiento</p>
       <nav>
         <ul>
-          <li><a class="boton" href="#servicios">Servicios</a></li>
+          <li><a class="boton" href="#productos">Servicios</a></li>
           <li><a class="boton" href="#precios">Precios</a></li>
           <li><a class="boton boton-principal" href="#solicitud">Solicitar servicio</a></li>
         </ul>
       </nav>
     </header>
 
-    <!-- ── MAIN: el contenido propio de esta página. Uno solo por documento. -->
+    <!-- ── MAIN: el contenido propio de esta página ────────────────────── -->
     <main>
       <div class="contenido-bloque">
-      <section id="servicios">
-        <h2>Nuestros servicios</h2>
-        <article>
-          <h3>Mantenimiento preventivo</h3>
-          <p>Limpieza interna, cambio de pasta térmica y optimización del sistema.</p>
-        </article>
-        <article>
-          <h3>Reparación de hardware</h3>
-          <p>Diagnóstico de componentes, cambio de pantallas y reparación de placas.</p>
-        </article>
-        <article>
-          <h3>Recuperación de datos</h3>
-          <p>Atención prioritaria en discos dañados hasta recuperar la información.</p>
-        </article>
-      </section>
+      
+        <!-- ── SECCIÓN DE PRODUCTOS CON BUSCADOR Y FILTROS ───────────────────── -->
+        <section id="productos">
+          <h2>Nuestros servicios y productos</h2>
 
-      <!-- ── TABLA ─────────────────────────────────────────────────────── -->
-      <section id="precios">
-        <h2>Horarios y precios</h2>
+          <!-- Buscador que interactúa con eventos.js -->
+          <p>
+            <label for="buscador" class="sr-only" style="display:none;">Buscar</label>
+            <input type="text" id="buscador" placeholder="Buscar por nombre..." autocomplete="off">
+          </p>
 
-        <table>
-          <caption>Lista de servicios y disponibilidad de atención</caption>
-          <thead>
-            <tr>
-              <th scope="col">Servicio</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Disponible</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Mantenimiento preventivo</td>  <td>Bs 100.00</td> <td>Todos los días</td></tr>
-            <tr><td>Formateo e instalación</td>     <td>Bs 70.00</td>  <td>Todos los días</td></tr>
-            <tr><td>Diagnóstico especializado</td>  <td>Bs 50.00</td>  <td>Lunes y jueves</td></tr>
-          </tbody>
-        </table>
+          <!-- Botones de filtro de categorías para eventos.js -->
+          <div id="filtros" style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; justify-content: center;">
+            <button class="boton activo" data-categoria="todos">Todos</button>
+            <button class="boton" data-categoria="servicios">Servicios</button>
+            <button class="boton" data-categoria="repuestos">Repuestos</button>
+            <button class="boton" data-categoria="accesorios">Accesorios</button>
+          </div>
 
-        <!-- ── FIGURE e IMG ──────────────────────────────────────────── -->
-        <figure>
-          <img src="taller.jpg"
-               alt="Taller de reparación con herramientas y placas base en mesa de trabajo"
-               width="600" height="400">
-          <figcaption>Nuestro taller equipado a primera hora de la mañana.</figcaption>
-        </figure>
-      </section>
+          <!-- Mensaje y contador dinámico para eventos.js -->
+          <p id="resultado" style="font-weight: 500; text-align: center; color: var(--color-suave);"></p>
 
-      <!-- ── FORMULARIO ACCESIBLE ──────────────────────────────────────── -->
-      <section id="solicitud">
-        <h2>Solicitar un servicio</h2>
+          <!-- Contenedor dinámico donde render.js dibuja las tarjetas -->
+          <div id="lista-productos"></div>
+        </section>
 
-        <form action="/solicitud" method="post">
+        <!-- ── TABLA DE PRECIOS Y HORARIOS ───────────────────────────────── -->
+        <section id="precios">
+          <h2>Horarios y precios</h2>
 
-          <fieldset>
-            <legend>Tus datos</legend>
+          <table>
+            <caption>Lista de servicios y disponibilidad de atención</caption>
+            <thead>
+              <tr>
+                <th scope="col">Servicio</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Disponible</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Mantenimiento preventivo</td>  <td>Bs 100.00</td> <td>Todos los días</td></tr>
+              <tr><td>Formateo e instalación</td>     <td>Bs 70.00</td>  <td>Todos los días</td></tr>
+              <tr><td>Diagnóstico especializado</td>  <td>Bs 50.00</td>  <td>Lunes y jueves</td></tr>
+            </tbody>
+          </table>
 
-            <p>
-              <label for="nombre">Nombre completo</label>
-              <input type="text" id="nombre" name="nombre"
-                     autocomplete="name" required>
-            </p>
+          <!-- ── FIGURE e IMG ──────────────────────────────────────────── -->
+          <figure>
+            <img src="taller.jpg"
+                 alt="Taller de reparación con herramientas y placas base en mesa de trabajo"
+                 width="600" height="400">
+            <figcaption>Nuestro taller equipado a primera hora de la mañana.</figcaption>
+          </figure>
+        </section>
 
-            <p>
-              <label for="email">Correo electrónico</label>
-              <input type="email" id="email" name="email"
-                     autocomplete="email" required>
-            </p>
+        <!-- ── FORMULARIO ACCESIBLE ──────────────────────────────────────── -->
+        <section id="solicitud">
+          <h2>Solicitar un servicio</h2>
 
-            <p>
-              <label for="telefono">Teléfono</label>
-              <input type="tel" id="telefono" name="telefono"
-                     autocomplete="tel" pattern="[0-9]{7,8}"
-                     title="7 u 8 dígitos, sin espacios">
-            </p>
-          </fieldset>
+          <form action="/solicitud" method="post">
 
-          <fieldset>
-            <legend>Tu equipo</legend>
+            <fieldset>
+              <legend>Tus datos</legend>
 
-            <p>
-              <label for="servicio">Servicio requerido</label>
-              <select id="servicio" name="servicio" required>
-                <option value="">Elige uno</option>
-                <option value="mantenimiento">Mantenimiento preventivo</option>
-                <option value="formateo">Formateo e instalación</option>
-                <option value="diagnostico">Diagnóstico especializado</option>
-              </select>
-            </p>
+              <p>
+                <label for="nombre">Nombre completo</label>
+                <input type="text" id="nombre" name="nombre"
+                       autocomplete="name" required>
+              </p>
 
-            <p>
-              <label for="cantidad">Cantidad de equipos</label>
-              <input type="number" id="cantidad" name="cantidad"
-                     min="1" max="100" value="1" required>
-            </p>
+              <p>
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email"
+                       autocomplete="email" required>
+              </p>
 
-            <p>
-              <label for="fecha">Fecha de recepción</label>
-              <input type="date" id="fecha" name="fecha" required>
-            </p>
+              <p>
+                <label for="telefono">Teléfono</label>
+                <input type="tel" id="telefono" name="telefono"
+                       autocomplete="tel" pattern="[0-9]{7,8}"
+                       title="7 u 8 dígitos, sin espacios">
+              </p>
+            </fieldset>
 
-            <p>
-              <label for="notas">Detalle de la falla</label>
-              <textarea id="notas" name="notas" rows="3"></textarea>
-            </p>
+            <fieldset>
+              <legend>Tu equipo</legend>
 
-            <p>
-              <input type="checkbox" id="terminos" name="terminos" required>
-              <label for="terminos">Acepto que el presupuesto se confirma por teléfono</label>
-            </p>
-          </fieldset>
+              <p>
+                <label for="servicio">Servicio requerido</label>
+                <select id="servicio" name="servicio" required>
+                  <option value="">Elige uno</option>
+                </select>
+              </p>
 
-          <button type="submit">Enviar solicitud</button>
-        </form>
-      </section>
+              <p>
+                <label for="cantidad">Cantidad de equipos</label>
+                <input type="number" id="cantidad" name="cantidad"
+                       min="1" max="100" value="1" required>
+              </p>
+
+              <p>
+                <label for="fecha">Fecha de recepción</label>
+                <input type="date" id="fecha" name="fecha" required>
+              </p>
+
+              <p>
+                <label for="notas">Detalle de la falla</label>
+                <textarea id="notas" name="notas" rows="3"></textarea>
+              </p>
+
+              <p>
+                <input type="checkbox" id="terminos" name="terminos" required>
+                <label for="terminos">Acepto que el presupuesto se confirma por teléfono</label>
+              </p>
+            </fieldset>
+
+            <button type="submit">Enviar solicitud</button>
+          </form>
+        </section>
       </div>
     </main>
 
@@ -162,6 +166,13 @@
       </address>
       <p><small>&copy; 2026 TecnoFix Servicio Técnico</small></p>
     </footer>
+
+    <!-- Carga de archivos JS en el orden correspondiente -->
+    <script src="app.js" defer></script>
+    <script src="funciones.js" defer></script>
+    <script src="datos.js" defer></script>
+    <script src="render.js" defer></script>
+    <script src="eventos.js" defer></script>
 
   </body>
 </html>

@@ -48,6 +48,21 @@ También indica cómo llegar al taller.
   accesorios, los métodos `forEach`, `map`, `filter`, `find`, `some`, `every`,
   `sort` y `reduce` (solos y encadenados) y clases con herencia (`Producto` y
   `ProductoConDescuento`). Se enlaza con `defer` después de `funciones.js`.
+- **JavaScript (`render.js`):** práctica de manipulación dinámica del DOM. Uso de
+  `querySelector` y `querySelectorAll` para selección de nodos, creación de elementos
+  con `createElement`, gestión de clases (`classList.add`) y atributos personalizados
+  (`dataset`). Implementa la función modular `render` para limpiar y dibujar las
+  tarjetas de productos en `#lista-productos`, genera dinámicamente las opciones
+  del `<select>` del formulario a partir del catálogo y muestra navegación por el
+  árbol DOM (`parentElement`). Se enlaza con `defer` después de `datos.js`.
+- **JavaScript (`eventos.js`):** interactividad y manejo de eventos. Implementa
+  búsqueda reactiva en tiempo real mediante el evento `input`, delegación de eventos
+  con `click` y `closest` en los botones de filtro por categoría (`#filtros`),
+  actualización sincronizada de la vista y contador de resultados. En el formulario,
+  captura el evento `submit` con `preventDefault`, realiza validación personalizada de
+  fechas (`setCustomValidity` y `reportValidity`), extrae los datos con `FormData` y
+  `Object.fromEntries`, y valida patrones con expresiones regulares (`RegExp`) para
+  teléfono, correo y cédula con `.test()`. Se enlaza con `defer` después de `render.js`.
 
 ## Capturas
 ![Escritorio](capturas/captura-escritorio.png)
