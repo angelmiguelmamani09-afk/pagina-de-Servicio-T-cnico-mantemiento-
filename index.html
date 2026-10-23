@@ -1,178 +1,211 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Servicio técnico especializado en computadoras y laptops. Mantenimiento y reparación desde 2018.">
-    <title>TecnoFix - Servicio Técnico</title>
-    <link rel="stylesheet" href="estilos.css">
-  </head>
-  <body>
 
-    <!-- ── HEADER: identidad y navegación principal ────────────────────── -->
-    <header>
-      <h1>TecnoFix Servicio Técnico</h1>
-      <p>Soluciones informáticas y mantenimiento</p>
-      <nav>
-        <ul>
-          <li><a class="boton" href="#productos">Servicios</a></li>
-          <li><a class="boton" href="#precios">Precios</a></li>
-          <li><a class="boton boton-principal" href="#solicitud">Solicitar servicio</a></li>
-        </ul>
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Servicio técnico especializado en computadoras y laptops. Mantenimiento y reparación desde 2018.">
+  <title>TecnoFix - Servicio Técnico</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
 
-    <!-- ── MAIN: el contenido propio de esta página ────────────────────── -->
-    <main>
-      <div class="contenido-bloque">
-      
-        <!-- ── SECCIÓN DE PRODUCTOS CON BUSCADOR Y FILTROS ───────────────────── -->
-        <section id="productos">
-          <h2>Nuestros servicios y productos</h2>
+<body>
 
-          <!-- Buscador que interactúa con eventos.js -->
-          <p>
-            <label for="buscador" class="sr-only" style="display:none;">Buscar</label>
-            <input type="text" id="buscador" placeholder="Buscar por nombre..." autocomplete="off">
-          </p>
+  <!-- ── HEADER: identidad y navegación principal ────────────────────── -->
+  <header>
+    <h1>TecnoFix Servicio Técnico</h1>
+    <p>Soluciones informáticas y mantenimiento</p>
+    <nav>
+      <ul>
+        <li><a class="boton" href="#productos">Servicios</a></li>
+        <li><a class="boton" href="#precios">Precios</a></li>
+        <li><a class="boton" href="#solicitud">Solicitar servicio</a></li>
+        <li><a class="boton" href="#demo">Demo JS</a></li>
+      </ul>
+    </nav>
+  </header>
 
-          <!-- Botones de filtro de categorías para eventos.js -->
-          <div id="filtros" style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; justify-content: center;">
-            <button class="boton activo" data-categoria="todos">Todos</button>
-            <button class="boton" data-categoria="servicios">Servicios</button>
-            <button class="boton" data-categoria="repuestos">Repuestos</button>
-            <button class="boton" data-categoria="accesorios">Accesorios</button>
-          </div>
+  <!-- ── MAIN: el contenido propio de esta página ────────────────────── -->
+  <main>
+    <div class="contenido-bloque">
 
-          <!-- Mensaje y contador dinámico para eventos.js -->
-          <p id="resultado" style="font-weight: 500; text-align: center; color: var(--color-suave);"></p>
+      <!-- ── SECCIÓN DE PRODUCTOS CON BUSCADOR Y FILTROS ───────────────────── -->
+      <section id="productos">
+        <h2>Nuestros servicios y productos</h2>
 
-          <!-- Contenedor dinámico donde render.js dibuja las tarjetas -->
-          <div id="lista-productos"></div>
-        </section>
+        <!-- Buscador que interactúa con eventos.js -->
+        <p>
+          <label for="buscador" class="sr-only" style="display:none;">Buscar</label>
+          <input type="text" id="buscador" placeholder="Buscar por nombre..." autocomplete="off">
+        </p>
 
-        <!-- ── TABLA DE PRECIOS Y HORARIOS ───────────────────────────────── -->
-        <section id="precios">
-          <h2>Horarios y precios</h2>
+        <!-- Botones de filtro de categorías para eventos.js -->
+        <div id="filtros"
+          style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; justify-content: center;">
+          <button class="boton activo" data-categoria="todos">Todos</button>
+          <button class="boton" data-categoria="servicios">Servicios</button>
+          <button class="boton" data-categoria="repuestos">Repuestos</button>
+          <button class="boton" data-categoria="accesorios">Accesorios</button>
+        </div>
 
-          <table>
-            <caption>Lista de servicios y disponibilidad de atención</caption>
-            <thead>
-              <tr>
-                <th scope="col">Servicio</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Disponible</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Mantenimiento preventivo</td>  <td>Bs 100.00</td> <td>Todos los días</td></tr>
-              <tr><td>Formateo e instalación</td>     <td>Bs 70.00</td>  <td>Todos los días</td></tr>
-              <tr><td>Diagnóstico especializado</td>  <td>Bs 50.00</td>  <td>Lunes y jueves</td></tr>
-            </tbody>
-          </table>
+        <!-- Mensaje y contador dinámico para eventos.js -->
+        <p id="resultado" style="font-weight: 500; text-align: center; color: var(--color-suave);"></p>
 
-          <!-- ── FIGURE e IMG ──────────────────────────────────────────── -->
-          <figure>
-            <img src="taller.jpg"
-                 alt="Taller de reparación con herramientas y placas base en mesa de trabajo"
-                 width="600" height="400">
-            <figcaption>Nuestro taller equipado a primera hora de la mañana.</figcaption>
-          </figure>
-        </section>
+        <!-- Contenedor dinámico donde render.js dibuja las tarjetas -->
+        <div id="lista-productos"></div>
+      </section>
 
-        <!-- ── FORMULARIO ACCESIBLE ──────────────────────────────────────── -->
-        <section id="solicitud">
-          <h2>Solicitar un servicio</h2>
+      <!-- ── TABLA DE PRECIOS Y HORARIOS ───────────────────────────────── -->
+      <section id="precios">
+        <h2>Horarios y precios</h2>
 
-          <form action="/solicitud" method="post">
+        <table>
+          <caption>Lista de servicios y disponibilidad de atención</caption>
+          <thead>
+            <tr>
+              <th scope="col">Servicio</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Disponible</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mantenimiento preventivo</td>
+              <td>Bs 100.00</td>
+              <td>Todos los días</td>
+            </tr>
+            <tr>
+              <td>Formateo e instalación</td>
+              <td>Bs 70.00</td>
+              <td>Todos los días</td>
+            </tr>
+            <tr>
+              <td>Diagnóstico especializado</td>
+              <td>Bs 50.00</td>
+              <td>Lunes y jueves</td>
+            </tr>
+          </tbody>
+        </table>
 
-            <fieldset>
-              <legend>Tus datos</legend>
-
-              <p>
-                <label for="nombre">Nombre completo</label>
-                <input type="text" id="nombre" name="nombre"
-                       autocomplete="name" required>
-              </p>
-
-              <p>
-                <label for="email">Correo electrónico</label>
-                <input type="email" id="email" name="email"
-                       autocomplete="email" required>
-              </p>
-
-              <p>
-                <label for="telefono">Teléfono</label>
-                <input type="tel" id="telefono" name="telefono"
-                       autocomplete="tel" pattern="[0-9]{7,8}"
-                       title="7 u 8 dígitos, sin espacios">
-              </p>
-            </fieldset>
-
-            <fieldset>
-              <legend>Tu equipo</legend>
-
-              <p>
-                <label for="servicio">Servicio requerido</label>
-                <select id="servicio" name="servicio" required>
-                  <option value="">Elige uno</option>
-                </select>
-              </p>
-
-              <p>
-                <label for="cantidad">Cantidad de equipos</label>
-                <input type="number" id="cantidad" name="cantidad"
-                       min="1" max="100" value="1" required>
-              </p>
-
-              <p>
-                <label for="fecha">Fecha de recepción</label>
-                <input type="date" id="fecha" name="fecha" required>
-              </p>
-
-              <p>
-                <label for="notas">Detalle de la falla</label>
-                <textarea id="notas" name="notas" rows="3"></textarea>
-              </p>
-
-              <p>
-                <input type="checkbox" id="terminos" name="terminos" required>
-                <label for="terminos">Acepto que el presupuesto se confirma por teléfono</label>
-              </p>
-            </fieldset>
-
-            <button type="submit">Enviar solicitud</button>
-          </form>
-        </section>
-      </div>
-    </main>
-
-    <aside>
-      <h2>¿Sabías?</h2>
-      <p>Utilizamos insumos de alta calidad y pasta térmica de alto rendimiento en cada mantenimiento.</p>
-    </aside>
-
-    <footer>
-      <h2>Dónde estamos</h2>
-      <address>
+        <!-- ── FIGURE e IMG ──────────────────────────────────────────── -->
         <figure>
-          <img src="ubicacion.jpg"
-               alt="Ubicación de TecnoFix en Colquencha, a media cuadra de la plaza principal"
-               width="470" height="556">
+          <img src="taller.jpg" alt="Taller de reparación con herramientas y placas base en mesa de trabajo" width="600"
+            height="400">
+          <figcaption>Nuestro taller equipado a primera hora de la mañana.</figcaption>
         </figure>
-        Provincia Aroma Localidad Colquencha<br>
-        A media cuadra de la plaza principal 15 de agosto<br>
-        Teléfono: 680 097 91
-      </address>
-      <p><small>&copy; 2026 TecnoFix Servicio Técnico</small></p>
-    </footer>
+      </section>
 
-    <!-- Carga de archivos JS en el orden correspondiente -->
-    <script src="app.js" defer></script>
-    <script src="funciones.js" defer></script>
-    <script src="datos.js" defer></script>
-    <script src="render.js" defer></script>
-    <script src="eventos.js" defer></script>
+      <!-- ── FORMULARIO ACCESIBLE ──────────────────────────────────────── -->
+      <section id="solicitud">
+        <h2>Solicitar un servicio</h2>
 
-  </body>
+        <form action="/solicitud" method="post">
+
+          <fieldset>
+            <legend>Tus datos</legend>
+
+            <p>
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" name="nombre" autocomplete="name" required>
+            </p>
+
+            <p>
+              <label for="email">Correo electrónico</label>
+              <input type="email" id="email" name="email" autocomplete="email" required>
+            </p>
+
+            <p>
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" name="telefono" autocomplete="tel" pattern="[0-9]{7,8}"
+                title="7 u 8 dígitos, sin espacios">
+            </p>
+          </fieldset>
+
+          <fieldset>
+            <legend>Tu equipo</legend>
+
+            <p>
+              <label for="servicio">Servicio requerido</label>
+              <select id="servicio" name="servicio" required>
+                <option value="">Elige uno</option>
+              </select>
+            </p>
+
+            <p>
+              <label for="cantidad">Cantidad de equipos</label>
+              <input type="number" id="cantidad" name="cantidad" min="1" max="100" value="1" required>
+            </p>
+
+            <p>
+              <label for="fecha">Fecha de recepción</label>
+              <input type="date" id="fecha" name="fecha" required>
+            </p>
+
+            <p>
+              <label for="notas">Detalle de la falla</label>
+              <textarea id="notas" name="notas" rows="3"></textarea>
+            </p>
+
+            <p>
+              <input type="checkbox" id="terminos" name="terminos" required>
+              <label for="terminos">Acepto que el presupuesto se confirma por teléfono</label>
+            </p>
+          </fieldset>
+
+          <button type="submit">Enviar solicitud</button>
+        </form>
+      </section>
+
+      <!-- ── SECCIÓN 4: DEMOSTRACIÓN VANILLA JS VS JQUERY ─────────────── -->
+      <section id="demo" class="seccion-demo" style="margin-top: 2rem;">
+        <h2>Demostración: Vanilla JavaScript vs jQuery</h2>
+        <div class="demo-contenedor" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <article class="demo-card" style="flex: 1; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
+            <h3>Prueba con Vanilla JS</h3>
+            <p id="salida-vanilla">Texto original en Vanilla JS</p>
+            <button type="button" id="boton-vanilla" class="boton">Probar Vanilla JS</button>
+          </article>
+
+          <article class="demo-card" style="flex: 1; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
+            <h3>Prueba con jQuery</h3>
+            <p id="salida-jquery">Texto original en jQuery</p>
+            <button type="button" id="boton-jquery" class="boton">Probar jQuery</button>
+          </article>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <aside>
+    <h2>¿Sabías?</h2>
+    <p>Utilizamos insumos de alta calidad y pasta térmica de alto rendimiento en cada mantenimiento.</p>
+  </aside>
+
+  <footer>
+    <h2>Dónde estamos</h2>
+    <address>
+      <figure>
+        <img src="ubicacion.jpg" alt="Ubicación de TecnoFix en Colquencha, a media cuadra de la plaza principal"
+          width="470" height="556">
+      </figure>
+      Provincia Aroma Localidad Colquencha<br>
+      A media cuadra de la plaza principal 15 de agosto<br>
+      Teléfono: 680 097 91
+    </address>
+    <p><small>&copy; 2026 TecnoFix Servicio Técnico</small></p>
+  </footer>
+
+  <!-- Carga de archivos JS en el orden correspondiente (Incluye jQuery CDN y script.js) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="app.js" defer></script>
+  <script src="funciones.js" defer></script>
+  <script src="datos.js" defer></script>
+  <script src="render.js" defer></script>
+  <script src="eventos.js" defer></script>
+  <script src="script.js" defer></script>
+
+</body>
+
 </html>
