@@ -51,18 +51,24 @@ También indica cómo llegar al taller.
 - **JavaScript (`render.js`):** práctica de manipulación dinámica del DOM. Uso de
   `querySelector` y `querySelectorAll` para selección de nodos, creación de elementos
   con `createElement`, gestión de clases (`classList.add`) y atributos personalizados
-  (`dataset`). Implementa la función modular `render` para limpiar y dibujar las
-  tarjetas de productos en `#lista-productos`, genera dinámicamente las opciones
-  del `<select>` del formulario a partir del catálogo y muestra navegación por el
-  árbol DOM (`parentElement`). Se enlaza con `defer` después de `datos.js`.
-- **JavaScript (`eventos.js`):** interactividad y manejo de eventos. Implementa
-  búsqueda reactiva en tiempo real mediante el evento `input`, delegación de eventos
-  con `click` y `closest` en los botones de filtro por categoría (`#filtros`),
-  actualización sincronizada de la vista y contador de resultados. En el formulario,
-  captura el evento `submit` con `preventDefault`, realiza validación personalizada de
-  fechas (`setCustomValidity` y `reportValidity`), extrae los datos con `FormData` y
-  `Object.fromEntries`, y valida patrones con expresiones regulares (`RegExp`) para
-  teléfono, correo y cédula con `.test()`. Se enlaza con `defer` después de `render.js`.
+  (`dataset`). Implementa la función modular `render` para dibujar tarjetas multimedia
+  con fotografías reales de cada servicio/producto, etiquetas de categoría, `onerror` fallback,
+  gestión de stock y agotados. Llena dinámicamente las opciones del `<select>` del formulario.
+  Se enlaza con `defer` después de `datos.js`.
+- **JavaScript (`eventos.js` con jQuery):** interactividad y manejo de eventos implementados
+  con **jQuery**. Búsqueda reactiva en tiempo real con `$().on("input")`, delegación de eventos
+  en botones de filtro (`#filtros`), actualización con animación visual (`fadeIn`) en las tarjetas
+  y contador dinámico. En el formulario, captura el evento `submit` con `preventDefault`, realiza
+  validación de fechas (`setCustomValidity`), extrae datos con `FormData`, muestra retroalimentación
+  animada con `.slideDown()` y añade desplazamiento suave (smooth scroll) en el menú de navegación.
+  Valida patrones con expresiones regulares (`RegExp`) con `.test()`. Se enlaza después de `render.js`.
+- **JavaScript (`jquery-panel.js` con jQuery - Día 11):** componentes interactivos avanzados
+  y efectos de jQuery. Incluye menú desplegable interactivo con `#menu-toggle` y `slideToggle(200)`
+  sincronizado con `aria-expanded`; acordeón accesible en `#acordeon` con delegación (`.on("click", ".titulo")`),
+  hermano adyacente (`.next(".cuerpo")`), detención de colas de animación (`.stop(true, true)`),
+  exclusión con `.not()` y actualización accesible; lista de avisos con aparición escalonada
+  usando `.each()`, `.delay(indice * 120)` y `.fadeIn(250)` con alternancia a `.fadeOut(200)`;
+  y función personalizada encadenable `resaltar()` que retorna la selección de jQuery. Se enlaza al final con `defer`.
 
 ## Capturas
 ![Escritorio](capturas/captura-escritorio.png)

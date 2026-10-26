@@ -25,14 +25,70 @@ console.log(mantenimientoPromo);
 
 // ── 3. ARREGLO DE OBJETOS ───────────────────────────────────────────────
 const productos = [
-  { nombre: "Mantenimiento preventivo",  precio: 100, categoria: "servicios",  stock: 40, disponible: true },
-  { nombre: "Formateo e instalación",    precio: 70,  categoria: "servicios",  stock: 25, disponible: true },
-  { nombre: "Diagnóstico especializado", precio: 50,  categoria: "servicios",  stock: 8,  disponible: true },
-  { nombre: "Memoria RAM 8 GB",          precio: 220, categoria: "repuestos",  stock: 0,  disponible: false },
-  { nombre: "Pasta térmica",             precio: 25,  categoria: "repuestos",  stock: 30, disponible: true },
-  { nombre: "Disco SSD 480 GB",          precio: 350, categoria: "accesorios", stock: 2,  disponible: true },
-  { nombre: "Mouse óptico",              precio: 35,  categoria: "accesorios", stock: 50, disponible: true },
-  { nombre: "Cable HDMI",                precio: 20,  categoria: "accesorios", stock: 0,  disponible: false },
+  {
+    nombre: "Mantenimiento preventivo",
+    precio: 100,
+    categoria: "servicios",
+    stock: 40,
+    disponible: true,
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/5/57/Computer_repair_in_progress.jpg",
+  },
+  {
+    nombre: "Formateo e instalación",
+    precio: 70,
+    categoria: "servicios",
+    stock: 25,
+    disponible: true,
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Debian_12_Graphical_Installer.png",
+  },
+  {
+    nombre: "Diagnóstico especializado",
+    precio: 50,
+    categoria: "servicios",
+    stock: 8,
+    disponible: true,
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/3/37/Laptop_Repair.jpg",
+  },
+  {
+    nombre: "Memoria RAM 8 GB",
+    precio: 220,
+    categoria: "repuestos",
+    stock: 0,
+    disponible: false,
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/f/f6/DDR4_Ram_IMGP5859_smial_wp.jpg",
+  },
+  {
+    nombre: "Pasta térmica",
+    precio: 25,
+    categoria: "repuestos",
+    stock: 30,
+    disponible: true,
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/3/36/Thermal_compound_Applied.JPG",
+  },
+  {
+    nombre: "Disco SSD 480 GB",
+    precio: 350,
+    categoria: "accesorios",
+    stock: 2,
+    disponible: true,
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/9/94/NVMe_SSd.jpg",
+  },
+  {
+    nombre: "Mouse óptico",
+    precio: 35,
+    categoria: "accesorios",
+    stock: 50,
+    disponible: true,
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Computer_mouse_1.jpg",
+  },
+  {
+    nombre: "Cable HDMI",
+    precio: 20,
+    categoria: "accesorios",
+    stock: 0,
+    disponible: false,
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/b/b0/HDMI-Kabel.jpg",
+  },
 ];
 
 // ── 4. LOS MÉTODOS QUE IMPORTAN ─────────────────────────────────────────

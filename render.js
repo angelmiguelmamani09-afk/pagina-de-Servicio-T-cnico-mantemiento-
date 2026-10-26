@@ -19,7 +19,17 @@ function crearTarjeta(producto) {
 
   articulo.dataset.nombre = producto.nombre;
 
+  const imagenSrc = producto.imagen || "taller.jpg";
+
   articulo.innerHTML = `
+    <div class="tarjeta-img-contenedor">
+      <img class="tarjeta-img" 
+           src="${imagenSrc}" 
+           alt="${producto.nombre}" 
+           loading="lazy" 
+           onerror="this.onerror=null; this.src='taller.jpg';">
+      <span class="tarjeta-badge">${producto.categoria}</span>
+    </div>
     <h3>${producto.nombre}</h3>
     <p class="precio">Bs ${producto.precio.toFixed(2)}</p>
     <p class="stock">${producto.disponible ? `${producto.stock} en stock` : "Agotado"}</p>

@@ -16,12 +16,21 @@
   <header>
     <h1>TecnoFix Servicio Técnico</h1>
     <p>Soluciones informáticas y mantenimiento</p>
-    <nav>
+
+    <!-- Botón conmutador para el menú desplegable con jQuery (Día 11: slideToggle) -->
+    <p style="margin: 1.25rem 0 0;">
+      <button id="menu-toggle" class="boton" type="button" aria-expanded="false" aria-controls="menu-movil">
+        ☰ Menú de navegación
+      </button>
+    </p>
+
+    <!-- Menú desplegable interactivo gestionado con jQuery -->
+    <nav id="menu-movil" aria-label="Navegación principal">
       <ul>
         <li><a class="boton" href="#productos">Servicios</a></li>
         <li><a class="boton" href="#precios">Precios</a></li>
         <li><a class="boton" href="#solicitud">Solicitar servicio</a></li>
-        <li><a class="boton" href="#demo">Demo JS</a></li>
+        <li><a class="boton" href="#panel">Preguntas y Avisos</a></li>
       </ul>
     </nav>
   </header>
@@ -157,24 +166,75 @@
         </form>
       </section>
 
-      <!-- ── SECCIÓN 4: DEMOSTRACIÓN VANILLA JS VS JQUERY ─────────────── -->
-      <section id="demo" class="seccion-demo" style="margin-top: 2rem;">
-        <h2>Demostración: Vanilla JavaScript vs jQuery</h2>
-        <div class="demo-contenedor" style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <article class="demo-card" style="flex: 1; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
-            <h3>Prueba con Vanilla JS</h3>
-            <p id="salida-vanilla">Texto original en Vanilla JS</p>
-            <button type="button" id="boton-vanilla" class="boton">Probar Vanilla JS</button>
-          </article>
+      <!-- ── PANEL INFORMATIVO (Día 11: jQuery - Acordeón y Avisos escalonados) ── -->
+      <section id="panel">
+        <h2>Preguntas frecuentes y avisos</h2>
+        <p style="text-align: center; color: var(--color-suave); margin-inline: auto; margin-bottom: 1.5rem;">
+          Respuestas a dudas habituales sobre nuestros servicios y las últimas novedades del taller.
+        </p>
 
-          <article class="demo-card" style="flex: 1; border: 1px solid #ccc; padding: 1rem; border-radius: 8px;">
-            <h3>Prueba con jQuery</h3>
-            <p id="salida-jquery">Texto original en jQuery</p>
-            <button type="button" id="boton-jquery" class="boton">Probar jQuery</button>
-          </article>
+        <!-- Acordeón interactivo con jQuery -->
+        <div id="acordeon" role="region" aria-label="Preguntas frecuentes">
+          <div class="item">
+            <button class="titulo" type="button" aria-expanded="false">
+              ¿Cuánto tiempo demora el mantenimiento de un equipo?
+            </button>
+            <div class="cuerpo">
+              <p>El mantenimiento preventivo y limpieza general se entregan en 24 horas hábiles. Para diagnósticos
+                especializados o reparaciones electrónicas en placa madre, el tiempo estimado es de 48 a 72 horas previa
+                confirmación del presupuesto.</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <button class="titulo" type="button" aria-expanded="false">
+              ¿Qué garantía ofrecen en sus reparaciones y repuestos?
+            </button>
+            <div class="cuerpo">
+              <p>Todos nuestros trabajos de servicio técnico tienen una garantía de 30 días en mano de obra. Los
+                repuestos y accesorios originales instalados incluyen la garantía directa de fábrica de 3 a 6 meses
+                según el componente.</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <button class="titulo" type="button" aria-expanded="false">
+              ¿Qué precauciones debo tener antes de entregar mi equipo?
+            </button>
+            <div class="cuerpo">
+              <p>Te aconsejamos realizar un respaldo de tus datos personales e importantes si el equipo aún enciende. Si
+                traes una laptop, no olvides traer su cargador original para verificar los voltajes de trabajo.</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <button class="titulo" type="button" aria-expanded="false">
+              ¿Realizan visitas técnicas o atención a domicilio?
+            </button>
+            <div class="cuerpo">
+              <p>Atendemos de manera fija en nuestro taller en Colquencha (a media cuadra de la plaza principal 15 de
+                agosto). También coordinamos visitas técnicas para colegios, oficinas y negocios de la zona.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Avisos con animación escalonada (.each + .delay + .fadeIn) -->
+        <div class="bloque-avisos">
+          <button id="mostrar-avisos" class="boton" type="button">
+            Mostrar avisos
+          </button>
+          <ul id="avisos" aria-live="polite">
+            <li>📢 <strong>Horario especial:</strong> Este fin de semana atenderemos en horario continuo de 08:00 a
+              14:00 por inventario y calibración de instrumental.</li>
+            <li>🔧 <strong>Promoción del mes:</strong> 15% de descuento en pasta térmica de alto rendimiento al
+              solicitar formateo y mantenimiento completo.</li>
+            <li>⚡ <strong>Nuevo equipamiento:</strong> Incorporamos estación de soldado por aire caliente y banco de
+              prueba digital para fuentes de poder.</li>
+            <li>📦 <strong>Llegaron repuestos:</strong> Disponibilidad inmediata de discos de estado sólido SSD NVMe,
+              pantallas LED y teclados para laptops.</li>
+          </ul>
         </div>
       </section>
-
     </div>
   </main>
 
@@ -197,14 +257,14 @@
     <p><small>&copy; 2026 TecnoFix Servicio Técnico</small></p>
   </footer>
 
-  <!-- Carga de archivos JS en el orden correspondiente (Incluye jQuery CDN y script.js) -->
+  <!-- Carga de librerías y scripts del proyecto -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="app.js" defer></script>
   <script src="funciones.js" defer></script>
   <script src="datos.js" defer></script>
   <script src="render.js" defer></script>
   <script src="eventos.js" defer></script>
-  <script src="script.js" defer></script>
+  <script src="jquery-panel.js" defer></script>
 
 </body>
 
