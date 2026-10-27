@@ -1,0 +1,17 @@
+{
+  "negocio": {
+    "nombre": "TecnoFix Servicio Técnico",
+    "ciudad": "Colquencha",
+    "telefono": "680 097 91"
+  },
+  "productos": [
+    { "nombre": "Mantenimiento preventivo",  "precio": 100, "categoria": "servicios",  "stock": 40, "disponible": true,  "unidad": "servicio" },
+    { "nombre": "Formateo e instalación",    "precio": 70,  "categoria": "servicios",  "stock": 25, "disponible": true,  "unidad": "servicio" },
+    { "nombre": "Diagnóstico especializado", "precio": 50,  "categoria": "servicios",  "stock": 8,  "disponible": true,  "unidad": "servicio" },
+    { "nombre": "Memoria RAM 8 GB",          "precio": 220, "categoria": "repuestos",  "stock": 0,  "disponible": false, "unidad": "unidad" },
+    { "nombre": "Pasta térmica",             "precio": 25,  "categoria": "repuestos",  "stock": 30, "disponible": true,  "unidad": "tubo" },
+    { "nombre": "Disco SSD 480 GB",          "precio": 350, "categoria": "accesorios", "stock": 2,  "disponible": true,  "unidad": "unidad" },
+    { "nombre": "Mouse óptico",              "precio": 35,  "categoria": "accesorios", "stock": 50, "disponible": true,  "unidad": "unidad" },
+    { "nombre": "Cable HDMI",                "precio": 20,  "categoria": "accesorios", "stock": 0,  "disponible": false, "unidad": "unidad" }
+  ]
+}

@@ -69,6 +69,14 @@ También indica cómo llegar al taller.
   exclusión con `.not()` y actualización accesible; lista de avisos con aparición escalonada
   usando `.each()`, `.delay(indice * 120)` y `.fadeIn(250)` con alternancia a `.fadeOut(200)`;
   y función personalizada encadenable `resaltar()` que retorna la selección de jQuery. Se enlaza al final con `defer`.
+- **JavaScript (`remoto.js` + `datos.json` - datos remotos):** carga del catálogo desde un
+  archivo externo en la sección *Catálogo remoto*. Convierte texto JSON a objeto con `JSON.parse`
+  y viceversa con `JSON.stringify`; pide `datos.json` con `fetch` y `async/await`, revisa
+  `respuesta.ok` y captura los fallos con `try/catch`; y repite lo mismo con `$.getJSON` de jQuery
+  (`.done`, `.fail`, `.always`). Muestra los tres estados de una carga (cargando, ok y error) en
+  `#estado`, y un botón provoca un error a propósito (`no-existe.json` responde 404). **Necesita un
+  servidor local** (Live Server o `http://localhost:8080`): abierto con doble clic (`file://`) el
+  navegador bloquea `fetch`. Se enlaza con `defer` al final, después de `jquery-panel.js`.
 
 ## Capturas
 ![Escritorio](capturas/captura-escritorio.png)

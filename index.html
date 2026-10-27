@@ -28,6 +28,7 @@
     <nav id="menu-movil" aria-label="Navegación principal">
       <ul>
         <li><a class="boton" href="#productos">Servicios</a></li>
+        <li><a class="boton" href="#remoto">Catálogo remoto</a></li>
         <li><a class="boton" href="#precios">Precios</a></li>
         <li><a class="boton" href="#solicitud">Solicitar servicio</a></li>
         <li><a class="boton" href="#panel">Preguntas y Avisos</a></li>
@@ -63,6 +64,27 @@
 
         <!-- Contenedor dinámico donde render.js dibuja las tarjetas -->
         <div id="lista-productos"></div>
+      </section>
+
+      <!-- ── CATÁLOGO REMOTO: datos.json con fetch y jQuery (remoto.js) ────── -->
+      <section id="remoto">
+        <h2>Catálogo remoto</h2>
+        <p class="intro">
+          Estos productos no están escritos en la página: se piden al archivo <code>datos.json</code>
+          cuando se pulsa un botón. Prueba la carga con <code>fetch</code>, con jQuery y también un error a propósito.
+        </p>
+
+        <div class="controles-remotos">
+          <button id="cargar-fetch" class="boton" type="button">Cargar con fetch</button>
+          <button id="cargar-jquery" class="boton" type="button">Cargar con jQuery</button>
+          <button id="cargar-roto" class="boton boton-error" type="button">Probar un error</button>
+        </div>
+
+        <!-- Los tres estados: cargando, ok y error (remoto.js) -->
+        <p id="estado" class="info" role="status" aria-live="polite">Pulsa un botón para cargar el catálogo.</p>
+
+        <!-- Contenedor donde remoto.js dibuja las tarjetas -->
+        <div id="lista-remota"></div>
       </section>
 
       <!-- ── TABLA DE PRECIOS Y HORARIOS ───────────────────────────────── -->
@@ -265,6 +287,7 @@
   <script src="render.js" defer></script>
   <script src="eventos.js" defer></script>
   <script src="jquery-panel.js" defer></script>
+  <script src="remoto.js" defer></script>
 
 </body>
 
