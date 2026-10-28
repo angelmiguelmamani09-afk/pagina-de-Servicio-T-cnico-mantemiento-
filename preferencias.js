@@ -143,7 +143,7 @@ document.querySelector("#olvidar").addEventListener("click", () => {
 // que lo pide apenas se abre, sin explicar para qué, recibe un "no" casi
 // siempre, y ese "no" suele ser permanente.
 
-const LOCAL = { lat: -16.72, lng: -68.27 };   // coordenadas del taller (Colquencha, aprox.)
+const LOCAL = { lat: -16.9328711, lng: -68.2484889 };   // coordenadas exactas del taller (Colquencha)
 
 // Distancia en línea recta entre dos puntos de la Tierra (fórmula de
 // Haversine). No hace falta entenderla: hace falta saber que existe y que la
