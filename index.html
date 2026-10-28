@@ -32,6 +32,7 @@
         <li><a class="boton" href="#precios">Precios</a></li>
         <li><a class="boton" href="#solicitud">Solicitar servicio</a></li>
         <li><a class="boton" href="#panel">Preguntas y Avisos</a></li>
+        <li><a class="boton" href="#preferencias">Preferencias</a></li>
       </ul>
     </nav>
   </header>
@@ -257,6 +258,35 @@
           </ul>
         </div>
       </section>
+
+      <!-- ── PREFERENCIAS Y UBICACIÓN (Día 13: Web Storage y Geolocation) ──── -->
+      <section id="preferencias">
+        <h2>Preferencias y ubicación</h2>
+        <p class="intro">
+          Tus preferencias se guardan en este navegador (<code>localStorage</code>) y siguen ahí cuando
+          recargas la página. La ubicación solo se pide si pulsas el botón, y la página funciona igual sin ella.
+        </p>
+
+        <div class="controles-preferencias">
+          <button id="tema-toggle" class="boton" type="button" aria-pressed="false">Modo oscuro</button>
+
+          <p class="campo-orden">
+            <label for="orden">Ordenar el catálogo por</label>
+            <select id="orden">
+              <option value="nombre">Nombre (A-Z)</option>
+              <option value="precio">Precio (menor a mayor)</option>
+            </select>
+          </p>
+
+          <button id="olvidar" class="boton boton-error" type="button">Olvidar preferencias</button>
+        </div>
+        <p id="estado-prefs" role="status" aria-live="polite"></p>
+
+        <div class="controles-preferencias">
+          <button id="ubicarme" class="boton" type="button">¿Qué tan lejos estoy del taller?</button>
+        </div>
+        <p id="estado-ubicacion" class="info" role="status" aria-live="polite">Pulsa el botón para calcular la distancia.</p>
+      </section>
     </div>
   </main>
 
@@ -280,7 +310,7 @@
   </footer>
 
   <!-- Carga de librerías y scripts del proyecto -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="jquery-3.7.1.min.js"></script>
   <script src="app.js" defer></script>
   <script src="funciones.js" defer></script>
   <script src="datos.js" defer></script>
@@ -288,6 +318,7 @@
   <script src="eventos.js" defer></script>
   <script src="jquery-panel.js" defer></script>
   <script src="remoto.js" defer></script>
+  <script src="preferencias.js" defer></script>
 
 </body>
 
