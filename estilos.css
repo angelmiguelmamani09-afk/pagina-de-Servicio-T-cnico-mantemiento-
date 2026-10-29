@@ -1159,3 +1159,26 @@ body.tema-oscuro #acordeon .cuerpo { background: #121b30; }
 body.tema-oscuro #avisos li { background: var(--color-superficie); }
 body.tema-oscuro #estado-ubicacion.aviso { background: #2d2308; color: #f5cf73; }
 body.tema-oscuro .btn-primario { color: #fff; }
+
+/* ── PORTADA v2 ─────────────────────────────────────────────────────── */
+.hero { position: relative; display: grid; place-items: center; min-height: min(82vh, 40rem); padding: 3.5rem var(--espacio) 3rem;
+  background: linear-gradient(180deg, rgba(8,20,52,.72), rgba(8,20,52,.92)), linear-gradient(135deg, rgba(18,68,214,.55), rgba(0,180,255,.25)), url("taller-hero.jpg") center/cover no-repeat, #0b1f4d; }
+.hero-contenido { width: 100%; max-width: 44rem; }
+.hero-etiqueta { display: inline-block; margin: 0 auto 1.25rem; padding: .35rem .9rem; font-size: .85rem; font-weight: 600; letter-spacing: .04em; color: #bfe9ff;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25); border-radius: 999px; backdrop-filter: blur(4px); }
+.hero h1 { margin: 0 0 1rem; font-size: clamp(2.2rem, 9vw, 3.6rem); line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; }
+.hero h1 span { background: linear-gradient(90deg, #7fd6ff, #fff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.tagline { margin: 0 auto 2rem; font-size: clamp(1rem, 3.6vw, 1.2rem); color: #d4e2ff; line-height: 1.55; }
+.hero-acciones { flex-direction: column; align-items: stretch; max-width: 22rem; margin-inline: auto; }
+.hero-acciones .btn { min-height: 52px; font-size: 1.05rem; }
+.hero-datos { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin: 2.25rem auto 0; max-width: 36rem; }
+.hero-datos li { padding: .75rem .4rem; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 14px; backdrop-filter: blur(4px); }
+.hero-datos strong { display: block; font-size: 1.05rem; line-height: 1.2; }
+.hero-datos span { display: block; margin-top: .15rem; font-size: .78rem; color: #bcd0f5; }
+@media (min-width: 40rem) {
+  .hero-acciones { flex-direction: row; justify-content: center; max-width: none; }
+  .hero-acciones .btn { min-width: 12rem; }
+  .hero-datos strong { font-size: 1.25rem; }
+  .hero-datos span { font-size: .9rem; }
+}
+.topbar a:not(.marca), .topbar .marca { text-decoration: none; }
