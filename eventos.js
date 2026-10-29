@@ -1,4 +1,9 @@
 // ── IMPLEMENTACIÓN CON JQUERY ──────────────────────────────────────────────
+const WHATSAPP = "59168009791";   // 591 (Bolivia) + 68009791
+const sinTildes = (t) => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+// Fecha de HOY en hora local (toISOString usa UTC y en Bolivia "adelanta" el día desde las 20:00)
+const hoyLocal = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
+
 $(function () {
   console.log("jQuery listo y funcionando. Versión:", $.fn.jquery);
 
@@ -17,17 +22,24 @@ $(function () {
 
     const visibles = productos
       .filter(p => categoriaActiva === "todos" || p.categoria === categoriaActiva)
-      .filter(p => p.nombre.toLowerCase().includes(textoBuscado.toLowerCase()));
+      .filter(p => sinTildes(p.nombre).includes(sinTildes(textoBuscado.trim())));
+
+    // Orden elegido en "Preferencias" (antes se guardaba pero no se aplicaba)
+    const orden = (typeof preferencias !== "undefined" && preferencias.orden) || "nombre";
+    visibles.sort(orden === "precio" ? (a, b) => a.precio - b.precio : (a, b) => a.nombre.localeCompare(b.nombre, "es"));
 
     // Renderizamos las tarjetas usando la función modular
     render(visibles);
 
     // Actualizamos el contador dinámico
-    $resultado.text(`${visibles.length} de ${productos.length} productos disponibles`);
+    $resultado.text(`Mostrando ${visibles.length} de ${productos.length}`);
 
     // Animación suave de aparición en las tarjetas con jQuery
     $("#lista-productos .tarjeta").hide().fadeIn(200);
   }
+
+  document.addEventListener("preferencias:cambio", actualizar);
+  $("#fecha").attr("min", hoyLocal());
 
   // Ejecución inicial
   actualizar();
@@ -50,38 +62,36 @@ $(function () {
     actualizar();
   });
 
-  // ── 5. FORMULARIO: VALIDACIÓN Y FEEDBACK ANIMADO CON JQUERY ───────────────
+  // ── 5. FORMULARIO: valida y envía la solicitud por WhatsApp ──────────────
   $formulario.on("submit", function (event) {
     event.preventDefault();
-
-    const formElement = this;
-    if (!formElement.reportValidity()) {
-      return;
-    }
-
+    const f = this;
     const $fecha = $("#fecha");
-    const hoy = new Date().toISOString().slice(0, 10);
+    $fecha[0].setCustomValidity("");
+    if (!f.reportValidity()) return;
 
-    if ($fecha.val() < hoy) {
-      $fecha[0].setCustomValidity("La fecha de entrega no puede ser anterior a hoy.");
+    if ($fecha.val() < hoyLocal()) {
+      $fecha[0].setCustomValidity("La fecha de recepción no puede ser anterior a hoy.");
       $fecha[0].reportValidity();
-
-      $fecha.one("input", function () {
-        this.setCustomValidity("");
-      });
+      $fecha.one("input", function () { this.setCustomValidity(""); });
       return;
     }
 
-    const datos = Object.fromEntries(new FormData(formElement));
-    console.log("Pedido recibido:", datos);
+    const d = Object.fromEntries(new FormData(f));
+    const texto = `Hola TecnoFix, quiero solicitar un servicio.\n` +
+      `• Nombre: ${d.nombre}\n• Teléfono: ${d.telefono || "-"}\n• Correo: ${d.email}\n` +
+      `• Servicio: ${$("#servicio option:selected").text()}\n• Equipos: ${d.cantidad}\n` +
+      `• Fecha de recepción: ${d.fecha}\n• Falla: ${d.notas || "-"}`;
+    const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(texto)}`;
+    window.open(url, "_blank", "noopener");
 
-    // Mensaje de éxito animado con slideDown
-    $resultado
-      .hide()
-      .html(`🎉 <strong>¡Gracias ${datos.nombre}!</strong> Tu solicitud para <em>${datos.servicio}</em> fue registrada.`)
-      .slideDown(350);
-
-    formElement.reset();
+    // .text() evita inyectar HTML con lo que escribió el usuario
+    $("#mensaje-form").prop("hidden", false).empty()
+      .append($("<strong>").text(`¡Gracias, ${d.nombre}! `),
+        "Abrimos WhatsApp con tu solicitud lista para enviar. ",
+        $("<a>", { href: url, target: "_blank", rel: "noopener" }).text("¿No se abrió? Toca aquí."))
+      .hide().slideDown(350);
+    f.reset();
   });
 
   // ── 6. NAVEGACIÓN CON SCROLL SUAVE MEDIANTE JQUERY ─────────────────────────
@@ -91,9 +101,13 @@ $(function () {
       const $destino = $(destinoId);
       if ($destino.length) {
         event.preventDefault();
+        if ($("#menu-toggle").is(":visible")) {   // cierra el menú en móvil
+          $("#menu-movil").slideUp(150);
+          $("#menu-toggle").attr("aria-expanded", "false");
+        }
         $("html, body").animate(
           {
-            scrollTop: $destino.offset().top - 20,
+            scrollTop: $destino.offset().top - ($(".topbar").outerHeight() || 0) - 8,
           },
           500
         );

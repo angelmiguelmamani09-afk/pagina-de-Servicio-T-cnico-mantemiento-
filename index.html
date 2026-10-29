@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1f4d">
   <meta name="description"
     content="Servicio técnico especializado en computadoras y laptops. Mantenimiento y reparación desde 2018.">
   <title>TecnoFix - Servicio Técnico</title>
@@ -13,29 +14,33 @@
 <body>
 
   <!-- ── HEADER: identidad y navegación principal ────────────────────── -->
-  <header>
-    <h1>TecnoFix Servicio Técnico</h1>
-    <p>Soluciones informáticas y mantenimiento</p>
-
-    <!-- Botón conmutador para el menú desplegable con jQuery (Día 11: slideToggle) -->
-    <p style="margin: 1.25rem 0 0;">
-      <button id="menu-toggle" class="boton" type="button" aria-expanded="false" aria-controls="menu-movil">
-        ☰ Menú de navegación
-      </button>
-    </p>
-
-    <!-- Menú desplegable interactivo gestionado con jQuery -->
+  <header class="topbar">
+    <a class="marca" href="#inicio"><span class="logo" aria-hidden="true">TF</span><span>TecnoFix</span></a>
+    <button id="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-movil">☰ Menú</button>
     <nav id="menu-movil" aria-label="Navegación principal">
       <ul>
-        <li><a class="boton" href="#productos">Servicios</a></li>
-        <li><a class="boton" href="#remoto">Catálogo remoto</a></li>
-        <li><a class="boton" href="#precios">Precios</a></li>
-        <li><a class="boton" href="#solicitud">Solicitar servicio</a></li>
-        <li><a class="boton" href="#panel">Preguntas y Avisos</a></li>
-        <li><a class="boton" href="#preferencias">Preferencias</a></li>
+        <li><a href="#productos">Servicios</a></li>
+        <li><a href="#precios">Precios</a></li>
+        <li><a href="#solicitud">Solicitar</a></li>
+        <li><a href="#panel">Preguntas</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
       </ul>
     </nav>
   </header>
+
+  <section class="hero" id="inicio">
+    <h1>TecnoFix Servicio Técnico</h1>
+    <p class="tagline">Mantenimiento, reparación y soporte para computadoras y laptops en Colquencha.</p>
+    <div class="hero-acciones">
+      <a class="btn btn-primario" href="#solicitud">Solicitar servicio</a>
+      <a class="btn btn-claro" href="#ubicacion">Cómo llegar</a>
+    </div>
+    <ul class="hero-datos">
+      <li><strong>Desde 2018</strong> en Colquencha</li>
+      <li><strong>30 días</strong> de garantía</li>
+      <li><strong>24 h</strong> en mantenimiento</li>
+    </ul>
+  </section>
 
   <!-- ── MAIN: el contenido propio de esta página ────────────────────── -->
   <main>
@@ -47,21 +52,20 @@
 
         <!-- Buscador que interactúa con eventos.js -->
         <p>
-          <label for="buscador" class="sr-only" style="display:none;">Buscar</label>
+          <label for="buscador" class="visualmente-oculto">Buscar servicio o producto</label>
           <input type="text" id="buscador" placeholder="Buscar por nombre..." autocomplete="off">
         </p>
 
         <!-- Botones de filtro de categorías para eventos.js -->
-        <div id="filtros"
-          style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; justify-content: center;">
-          <button class="boton activo" data-categoria="todos">Todos</button>
-          <button class="boton" data-categoria="servicios">Servicios</button>
-          <button class="boton" data-categoria="repuestos">Repuestos</button>
-          <button class="boton" data-categoria="accesorios">Accesorios</button>
+        <div id="filtros">
+          <button type="button" class="boton activo" data-categoria="todos">Todos</button>
+          <button type="button" class="boton" data-categoria="servicios">Servicios</button>
+          <button type="button" class="boton" data-categoria="repuestos">Repuestos</button>
+          <button type="button" class="boton" data-categoria="accesorios">Accesorios</button>
         </div>
 
         <!-- Mensaje y contador dinámico para eventos.js -->
-        <p id="resultado" style="font-weight: 500; text-align: center; color: var(--color-suave);"></p>
+        <p id="resultado"></p>
 
         <!-- Contenedor dinámico donde render.js dibuja las tarjetas -->
         <div id="lista-productos"></div>
@@ -132,7 +136,7 @@
       <section id="solicitud">
         <h2>Solicitar un servicio</h2>
 
-        <form action="/solicitud" method="post">
+        <form id="form-solicitud">
 
           <fieldset>
             <legend>Tus datos</legend>
@@ -185,14 +189,15 @@
             </p>
           </fieldset>
 
-          <button type="submit">Enviar solicitud</button>
+          <button type="submit" class="btn btn-primario btn-bloque">Enviar solicitud por WhatsApp</button>
         </form>
+        <p id="mensaje-form" class="info" role="status" aria-live="polite" hidden></p>
       </section>
 
       <!-- ── PANEL INFORMATIVO (Día 11: jQuery - Acordeón y Avisos escalonados) ── -->
       <section id="panel">
         <h2>Preguntas frecuentes y avisos</h2>
-        <p style="text-align: center; color: var(--color-suave); margin-inline: auto; margin-bottom: 1.5rem;">
+        <p class="intro">
           Respuestas a dudas habituales sobre nuestros servicios y las últimas novedades del taller.
         </p>
 
@@ -260,16 +265,30 @@
       </section>
 
       <!-- ── PREFERENCIAS Y UBICACIÓN (Día 13: Web Storage y Geolocation) ──── -->
-      <section id="preferencias">
-        <h2>Preferencias y ubicación</h2>
-        <p class="intro">
-          Tus preferencias se guardan en este navegador (<code>localStorage</code>) y siguen ahí cuando
-          recargas la página. La ubicación solo se pide si pulsas el botón, y la página funciona igual sin ella.
-        </p>
+      <section id="ubicacion">
+        <h2>Ubicación y preferencias</h2>
+        <div class="ubicacion-grid">
+          <div class="mapa">
+            <iframe title="Mapa de TecnoFix en Colquencha" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="https://maps.google.com/maps?q=-16.9328711,-68.2484889&z=16&output=embed"></iframe>
+          </div>
+          <div class="ubicacion-datos">
+            <h3>TecnoFix · Colquencha</h3>
+            <p>A media cuadra de la plaza principal 15 de agosto.</p>
+            <div class="acciones">
+              <button id="ubicarme" class="btn btn-primario" type="button">📍 ¿Qué tan lejos estoy?</button>
+              <a id="como-llegar" class="btn btn-claro" target="_blank" rel="noopener"
+                href="https://www.google.com/maps/dir/?api=1&destination=-16.9328711,-68.2484889">Cómo llegar</a>
+              <a class="btn btn-claro" target="_blank" rel="noopener" href="https://wa.me/59168009791">WhatsApp</a>
+            </div>
+            <p id="estado-ubicacion" class="info" role="status" aria-live="polite">Pulsa el botón para calcular la distancia. Solo se pide permiso al pulsarlo.</p>
+          </div>
+        </div>
 
+        <h3 class="subtitulo">Preferencias de la página</h3>
+        <p class="intro">Se guardan en este navegador y siguen ahí cuando recargas.</p>
         <div class="controles-preferencias">
           <button id="tema-toggle" class="boton" type="button" aria-pressed="false">Modo oscuro</button>
-
           <p class="campo-orden">
             <label for="orden">Ordenar el catálogo por</label>
             <select id="orden">
@@ -277,15 +296,9 @@
               <option value="precio">Precio (menor a mayor)</option>
             </select>
           </p>
-
           <button id="olvidar" class="boton boton-error" type="button">Olvidar preferencias</button>
         </div>
         <p id="estado-prefs" role="status" aria-live="polite"></p>
-
-        <div class="controles-preferencias">
-          <button id="ubicarme" class="boton" type="button">¿Qué tan lejos estoy del taller?</button>
-        </div>
-        <p id="estado-ubicacion" class="info" role="status" aria-live="polite">Pulsa el botón para calcular la distancia.</p>
       </section>
     </div>
   </main>
@@ -304,15 +317,13 @@
       </figure>
       Provincia Aroma Localidad Colquencha<br>
       A media cuadra de la plaza principal 15 de agosto<br>
-      Teléfono: 680 097 91
+      Teléfono: <a href="tel:+59168009791">680 097 91</a>
     </address>
     <p><small>&copy; 2026 TecnoFix Servicio Técnico</small></p>
   </footer>
 
   <!-- Carga de librerías y scripts del proyecto -->
   <script src="jquery-3.7.1.min.js"></script>
-  <script src="app.js" defer></script>
-  <script src="funciones.js" defer></script>
   <script src="datos.js" defer></script>
   <script src="render.js" defer></script>
   <script src="eventos.js" defer></script>

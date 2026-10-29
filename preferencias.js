@@ -33,7 +33,7 @@ const CLAVE = "tecnofix:preferencias";
 // Un solo objeto con todas las preferencias, bajo una sola clave. Mejor que
 // una clave por dato: se lee y se guarda de una vez, y no quedan claves
 // sueltas de versiones viejas.
-const PREFERENCIAS_POR_DEFECTO = { tema: "claro", orden: "nombre" };
+const PREFERENCIAS_POR_DEFECTO = { tema: window.matchMedia("(prefers-color-scheme: dark)").matches ? "oscuro" : "claro", orden: "nombre" };
 
 // ── 2. LEER CON try/catch ───────────────────────────────────────────────
 // El dato guardado puede estar CORRUPTO: lo escribió una versión anterior del
@@ -143,13 +143,12 @@ document.querySelector("#olvidar").addEventListener("click", () => {
 // que lo pide apenas se abre, sin explicar para qué, recibe un "no" casi
 // siempre, y ese "no" suele ser permanente.
 
-const LOCAL = { lat: -16.9328711, lng: -68.2484889 };   // coordenadas exactas del taller (Colquencha)
+const LOCAL = { lat: -16.9328711, lng: -68.2484889 };   // TecnoFix, Colquencha
+const RADIO_LLEGADA_M = 150;   // dentro de este radio se considera "ya estás en el taller"
 
-// Distancia en línea recta entre dos puntos de la Tierra (fórmula de
-// Haversine). No hace falta entenderla: hace falta saber que existe y que la
-// Tierra es curva, así que no se resta y ya.
+// Distancia en línea recta entre dos puntos (fórmula de Haversine).
 function distanciaKm(lat1, lng1, lat2, lng2) {
-  const R = 6371;                                   // radio de la Tierra en km
+  const R = 6371;
   const aRad = (g) => (g * Math.PI) / 180;
   const dLat = aRad(lat2 - lat1);
   const dLng = aRad(lng2 - lng1);
@@ -159,48 +158,67 @@ function distanciaKm(lat1, lng1, lat2, lng2) {
 }
 
 const $ubic = document.querySelector("#estado-ubicacion");
+const $btnUbic = document.querySelector("#ubicarme");
+const fmt = (km) => (km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`);
+const estado = (texto, clase) => { $ubic.textContent = texto; $ubic.className = clase; };
 
-document.querySelector("#ubicarme").addEventListener("click", () => {
-  // Primero: ¿existe la API? En un navegador viejo o sin soporte, no.
-  if (!navigator.geolocation) {
-    $ubic.textContent = "Tu navegador no permite compartir la ubicación.";
-    $ubic.className = "error";
-    return;
+// Un celular con GPS da ±5-30 m. Una PC o un celular sin GPS usa Wi-Fi/IP y puede
+// equivocarse por decenas de km: por eso se muestra la precisión y se avisa.
+function mostrarUbicacion({ latitude, longitude, accuracy }) {
+  const km = distanciaKm(latitude, longitude, LOCAL.lat, LOCAL.lng);
+  const imprecisa = accuracy > 1000;
+
+  if (!imprecisa && km * 1000 <= RADIO_LLEGADA_M + accuracy) {
+    estado(`¡Ya estás en TecnoFix! (precisión ±${Math.round(accuracy)} m)`, "ok");
+  } else if (imprecisa) {
+    estado(`Ubicación aproximada (±${fmt(accuracy / 1000)}): tu dispositivo no está usando GPS, ` +
+      `así que la distancia (≈ ${fmt(km)}) puede no ser real. Activa la ubicación precisa y vuelve a intentar.`, "aviso");
+  } else {
+    estado(`Estás a ${fmt(km)} del taller en línea recta (precisión ±${Math.round(accuracy)} m). ` +
+      `Por carretera puede ser algo más.`, "ok");
   }
+}
 
-  $ubic.textContent = "Pidiendo permiso...";
-  $ubic.className = "cargando";
+let vigilancia = null;
+function detener() {
+  if (vigilancia !== null) navigator.geolocation.clearWatch(vigilancia);
+  vigilancia = null;
+  $btnUbic.disabled = false;
+}
 
-  navigator.geolocation.getCurrentPosition(
-    // ÉXITO: llega un objeto position
-    (position) => {
-      const { latitude, longitude, accuracy } = position.coords;
-      const km = distanciaKm(latitude, longitude, LOCAL.lat, LOCAL.lng);
-      $ubic.textContent =
-        `Estás a ${km.toFixed(1)} km del local (precisión: ${Math.round(accuracy)} m).`;
-      $ubic.className = "ok";
+$btnUbic.addEventListener("click", () => {
+  if (!navigator.geolocation) return estado("Tu navegador no permite compartir la ubicación.", "error");
+  if (!window.isSecureContext) return estado("La ubicación solo funciona en HTTPS o en localhost.", "error");
+
+  detener();
+  $btnUbic.disabled = true;
+  estado("Buscando tu ubicación… puede tardar unos segundos.", "cargando");
+
+  let mejor = null;
+  // Se sigue la posición unos segundos y se queda la lectura MÁS PRECISA:
+  // la primera lectura suele ser una aproximación por red.
+  const limite = setTimeout(() => {
+    detener();
+    mejor ? mostrarUbicacion(mejor.coords) : estado("Tardó demasiado. Intenta de nuevo.", "error");
+  }, 15000);
+
+  vigilancia = navigator.geolocation.watchPosition(
+    (pos) => {
+      if (!mejor || pos.coords.accuracy < mejor.coords.accuracy) mejor = pos;
+      mostrarUbicacion(mejor.coords);
+      if (mejor.coords.accuracy <= 50) { clearTimeout(limite); detener(); }
     },
-
-    // ERROR: y hay que distinguir cuál, porque la solución es distinta
     (error) => {
+      clearTimeout(limite);
+      detener();
       const mensajes = {
-        [error.PERMISSION_DENIED]:
-          "No diste permiso. Puedes seguir usando la página igual.",
-        [error.POSITION_UNAVAILABLE]:
-          "No se pudo determinar tu ubicación. ¿Estás bajo techo?",
-        [error.TIMEOUT]:
-          "Tardó demasiado. Intenta de nuevo.",
+        [error.PERMISSION_DENIED]: "No diste permiso de ubicación. Puedes seguir usando la página igual.",
+        [error.POSITION_UNAVAILABLE]: "No se pudo determinar tu ubicación. Prueba al aire libre y con el GPS activado.",
+        [error.TIMEOUT]: "Tardó demasiado. Intenta de nuevo.",
       };
-      $ubic.textContent = mensajes[error.code] || "No se pudo obtener la ubicación.";
-      $ubic.className = "error";
+      estado(mensajes[error.code] || "No se pudo obtener la ubicación.", "error");
     },
-
-    // OPCIONES
-    {
-      enableHighAccuracy: false,  // true usa GPS: más preciso y más batería
-      timeout: 10000,             // 10 s y se rinde
-      maximumAge: 300000,         // acepta una posición de hasta 5 min de antigüedad
-    }
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }   // GPS y sin posiciones viejas
   );
 });
 

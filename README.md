@@ -79,7 +79,7 @@ También indica cómo llegar al taller.
   navegador bloquea `fetch`. Se enlaza con `defer` al final, después de `jquery-panel.js`.
 
 ## Capturas
-![Escritorio](capturas/captura-escritorio.png)
+![Escritorio](capturas/escritorio.png)
 ![Móvil 375px](capturas/captura-movil.png)
 
 ## Lo más difícil
