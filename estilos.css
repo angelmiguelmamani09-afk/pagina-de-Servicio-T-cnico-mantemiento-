@@ -1182,3 +1182,45 @@ body.tema-oscuro .btn-primario { color: #fff; }
   .hero-datos span { font-size: .9rem; }
 }
 .topbar a:not(.marca), .topbar .marca { text-decoration: none; }
+
+/* ── TABLERO DEL TALLER ─────────────────────────────────────────────── */
+.tablero { display: grid; gap: 1rem; }
+@media (min-width: 48rem) { .tablero { grid-template-columns: repeat(3, 1fr); } }
+/* La caja de redondos no recibe fichas arrastradas: es solo una vista */
+.columna-redondos { border-style: solid; }
+.columna { min-height: 10rem; padding: 1rem; background: var(--color-superficie); border: 2px dashed var(--borde); border-radius: var(--radio); transition: border-color .2s, background .2s; }
+.columna.encima { border-color: var(--color-acento); background: color-mix(in srgb, var(--color-acento) 10%, var(--color-superficie)); }
+.columna h3 { margin: 0 0 .75rem; font-size: 1.05rem; text-align: left; }
+.lista-columna { display: grid; gap: .5rem; min-height: 3rem; margin: 0; padding: 0; list-style: none; }
+.ficha { display: grid; gap: .5rem; padding: .6rem; font-weight: 600; font-size: .95rem; cursor: grab; background: var(--color-fondo); border: 1px solid var(--borde); border-radius: 10px; box-shadow: var(--sombra); }
+.ficha.arrastrando { opacity: .45; cursor: grabbing; }
+.ficha.agotada { opacity: .7; }
+.ficha-fila, .ficha-extra { display: flex; align-items: center; gap: .5rem; }
+.ficha .nombre { flex: 1; text-align: left; }
+.ficha .nombre small { display: block; font-weight: 400; font-size: .8rem; color: var(--color-suave); }
+.ficha button { flex: none; width: 2.25rem; min-height: 2.25rem; margin: 0; padding: 0; font-size: .85rem; line-height: 1; color: var(--color-acento); background: transparent; border: 1px solid var(--borde); border-radius: 8px; box-shadow: none; }
+.ficha button:hover { color: #fff; background: var(--color-acento); border-color: var(--color-acento); transform: none; box-shadow: none; }
+.ficha .cantidad { min-width: 1.5rem; text-align: center; }
+.ficha .subtotal { flex: 1; text-align: right; color: var(--color-acento); }
+.nota-ficha { width: 100%; padding: .4rem .5rem; font-size: .85rem; color: var(--color-texto); background: var(--color-superficie); border: 1px solid var(--borde); border-radius: 8px; }
+.resumen-pedido { margin-top: 1rem; text-align: center; }
+.resumen-pedido p { font-size: 1.15rem; margin: 0 0 .75rem; }
+.resumen-pedido div { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; }
+.resumen-pedido button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.columna .total { margin: .75rem 0 0; font-size: .85rem; text-align: left; color: var(--color-suave); }
+#grafico { display: block; width: 100%; max-width: 40rem; height: 16rem; margin: 1rem auto 0; background: var(--color-superficie); border: 1px solid var(--borde); border-radius: var(--radio); }
+
+/* ── REDONDOS: selección del cliente con foto circular ───────────────── */
+.redondos { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: 1rem .75rem; margin: 0; padding: 0; list-style: none; }
+.redondo { position: relative; display: flex; flex-direction: column; align-items: center; gap: .15rem; text-align: center; animation: redondo-entra .25s ease-out; }
+.redondo-foto { position: relative; width: 4.75rem; aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--color-acento); background: var(--color-fondo); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-acento) 22%, transparent), var(--sombra); overflow: visible; }
+.redondo-foto img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.redondo-cant { position: absolute; right: -.35rem; bottom: -.2rem; min-width: 1.6rem; padding: .1rem .4rem; font-size: .75rem; font-weight: 700; line-height: 1.3; text-align: center; color: #fff; background: var(--color-acento); border: 2px solid var(--color-superficie); border-radius: 999px; }
+.redondo-nombre { margin-top: .35rem; font-size: .8rem; font-weight: 600; line-height: 1.2; }
+.redondo small { font-size: .75rem; color: var(--color-suave); }
+.redondo-quitar { position: absolute; top: -.25rem; right: calc(50% - 3.1rem); display: grid; place-items: center; width: 1.45rem; min-height: 1.45rem; margin: 0; padding: 0; font-size: .7rem; line-height: 1; color: #fff; background: #b42828; border: 2px solid var(--color-superficie); border-radius: 50%; box-shadow: none; opacity: 0; transition: opacity .15s; cursor: pointer; }
+.redondo:hover .redondo-quitar, .redondo-quitar:focus-visible { opacity: 1; }
+@media (hover: none) { .redondo-quitar { opacity: 1; } }
+.redondos-vacio { margin: 0 0 .5rem; font-size: .9rem; text-align: left; color: var(--color-suave); }
+@keyframes redondo-entra { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .redondo { animation: none; } }

@@ -20,6 +20,7 @@
     <nav id="menu-movil" aria-label="Navegación principal">
       <ul>
         <li><a href="#productos">Servicios</a></li>
+        <li><a href="#taller">Mi pedido</a></li>
         <li><a href="#precios">Precios</a></li>
         <li><a href="#solicitud">Solicitar</a></li>
         <li><a href="#panel">Preguntas</a></li>
@@ -74,25 +75,31 @@
         <div id="lista-productos"></div>
       </section>
 
-      <!-- ── CATÁLOGO REMOTO: datos.json con fetch y jQuery (remoto.js) ────── -->
-      <section id="remoto">
-        <h2>Catálogo remoto</h2>
-        <p class="intro">
-          Estos productos no están escritos en la página: se piden al archivo <code>datos.json</code>
-          cuando se pulsa un botón. Prueba la carga con <code>fetch</code>, con jQuery y también un error a propósito.
-        </p>
-
-        <div class="controles-remotos">
-          <button id="cargar-fetch" class="boton" type="button">Cargar con fetch</button>
-          <button id="cargar-jquery" class="boton" type="button">Cargar con jQuery</button>
-          <button id="cargar-roto" class="boton boton-error" type="button">Probar un error</button>
+<!-- ── TABLERO DEL CLIENTE: ARMA TU PEDIDO (Día 14: Drag & Drop y Canvas) ─ -->
+      <section id="taller">
+        <h2>Arma tu pedido</h2>
+        <p class="intro">Arrastra los servicios y repuestos que quieras a <strong>Mi pedido</strong>. Puedes cambiar la cantidad, escribir un detalle (por ejemplo, otra memoria RAM) y quitar lo que no necesites. En el celular usa las flechas ◀ ▶. Se guarda en este navegador.</p>
+        <div id="tablero" class="tablero">
+          <div class="columna" data-columna="disponibles"><h3>🛍️ Disponibles</h3><ul class="lista-columna"></ul><p class="total"></p></div>
+          <div class="columna" data-columna="pedido"><h3>🧾 Mi pedido</h3><ul class="lista-columna"></ul><p class="total"></p></div>
+          <div class="columna columna-redondos" aria-label="Lo que elegiste">
+            <h3>✅ Tu selección</h3>
+            <p id="redondos-vacio" class="redondos-vacio">Aún no elegiste nada. Lo que agregues a <strong>Mi pedido</strong> aparecerá aquí.</p>
+            <ul id="redondos" class="redondos"></ul>
+            <p id="redondos-total" class="total"></p>
+          </div>
         </div>
-
-        <!-- Los tres estados: cargando, ok y error (remoto.js) -->
-        <p id="estado" class="info" role="status" aria-live="polite">Pulsa un botón para cargar el catálogo.</p>
-
-        <!-- Contenedor donde remoto.js dibuja las tarjetas -->
-        <div id="lista-remota"></div>
+        <p id="mensaje-tablero" class="info" role="status" aria-live="polite"></p>
+        <div class="resumen-pedido">
+          <p>Total de tu pedido: <strong id="total-pedido">Bs 0.00</strong></p>
+          <div id="acciones-pedido">
+            <button id="enviar-whatsapp" class="btn btn-primario" type="button">Enviar por WhatsApp</button>
+            <button id="llevar-formulario" class="btn btn-claro" type="button">Llevar al formulario</button>
+            <button id="vaciar-pedido" class="boton boton-error" type="button">Vaciar pedido</button>
+          </div>
+        </div>
+        <h3 class="subtitulo">¿En qué se va tu pedido?</h3>
+        <canvas id="grafico" role="img" aria-label="Gasto del pedido por categoría"></canvas>
       </section>
 
       <!-- ── TABLA DE PRECIOS Y HORARIOS ───────────────────────────────── -->
@@ -331,8 +338,8 @@
   <script src="render.js?v=2" defer></script>
   <script src="eventos.js?v=2" defer></script>
   <script src="jquery-panel.js?v=2" defer></script>
-  <script src="remoto.js?v=2" defer></script>
   <script src="preferencias.js?v=2" defer></script>
+  <script src="tablero.js?v=4" defer></script>
 
 </body>
 
