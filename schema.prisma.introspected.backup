@@ -1,0 +1,296 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model RolSistema {
+  id       Int       @id @default(autoincrement())
+  nombre   Rol       @unique
+  usuarios Usuario[]
+}
+
+model Usuario {
+  id               String            @id @default(cuid())
+  nombre           String
+  email            String            @unique
+  passwordHash     String
+  activo           Boolean           @default(true)
+  rolId            Int
+  creadoEn         DateTime          @default(now())
+  actualizadoEn    DateTime          @updatedAt
+  cliente          Cliente?
+  diagnosticos     Diagnostico[]
+  cambiosEstado    HistorialEstado[]
+  ordenesAsignadas OrdenTrabajo[]    @relation("TecnicoOrden")
+  rol              RolSistema        @relation(fields: [rolId], references: [id])
+}
+
+model Cliente {
+  id            String         @id @default(cuid())
+  usuarioId     String?        @unique
+  nombres       String
+  apellidos     String
+  telefono      String
+  email         String?
+  direccion     String?
+  creadoEn      DateTime       @default(now())
+  actualizadoEn DateTime       @updatedAt
+  usuario       Usuario?       @relation(fields: [usuarioId], references: [id])
+  equipos       Equipo[]
+  ordenes       OrdenTrabajo[]
+  solicitudes   Solicitud[]
+}
+
+model Equipo {
+  id          String         @id @default(cuid())
+  clienteId   String
+  tipo        String
+  marca       String
+  modelo      String?
+  numeroSerie String?
+  descripcion String?
+  creadoEn    DateTime       @default(now())
+  cliente     Cliente        @relation(fields: [clienteId], references: [id])
+  ordenes     OrdenTrabajo[]
+
+  @@index([clienteId])
+}
+
+model Categoria {
+  id        String     @id @default(cuid())
+  nombre    String     @unique
+  productos Producto[]
+  servicios Servicio[]
+}
+
+model Servicio {
+  id          String      @id @default(cuid())
+  categoriaId String?
+  nombre      String
+  descripcion String?
+  precio      Decimal     @db.Decimal(10, 2)
+  activo      Boolean     @default(true)
+  categoria   Categoria?  @relation(fields: [categoriaId], references: [id])
+  solicitudes Solicitud[]
+}
+
+model Producto {
+  id            String                 @id @default(cuid())
+  categoriaId   String?
+  sku           String?                @unique
+  nombre        String
+  descripcion   String?
+  precioVenta   Decimal                @db.Decimal(10, 2)
+  costo         Decimal?               @db.Decimal(10, 2)
+  stock         Int                    @default(0)
+  stockMinimo   Int                    @default(0)
+  activo        Boolean                @default(true)
+  creadoEn      DateTime               @default(now())
+  actualizadoEn DateTime               @updatedAt
+  movimientos   MovimientoInventario[]
+  categoria     Categoria?             @relation(fields: [categoriaId], references: [id])
+  repuestos     RepuestoUtilizado[]
+}
+
+model Solicitud {
+  id             String          @id @default(cuid())
+  codigo         String          @unique
+  clienteId      String
+  servicioId     String?
+  equipoTipo     String?
+  descripcion    String
+  fechaPreferida DateTime?
+  estado         EstadoSolicitud @default(RECIBIDA)
+  creadoEn       DateTime        @default(now())
+  orden          OrdenTrabajo?
+  cliente        Cliente         @relation(fields: [clienteId], references: [id])
+  servicio       Servicio?       @relation(fields: [servicioId], references: [id])
+
+  @@index([clienteId, creadoEn])
+}
+
+model OrdenTrabajo {
+  id                     String              @id @default(cuid())
+  codigo                 String              @unique
+  clienteId              String
+  equipoId               String
+  solicitudId            String?             @unique
+  tecnicoId              String?
+  estado                 EstadoOrden         @default(RECIBIDO)
+  accesoriosRecibidos    String?
+  observacionesRecepcion String?
+  fechaRecepcion         DateTime            @default(now())
+  fechaEntrega           DateTime?
+  actualizadoEn          DateTime            @updatedAt
+  diagnosticos           Diagnostico[]
+  garantia               Garantia?
+  historial              HistorialEstado[]
+  cliente                Cliente             @relation(fields: [clienteId], references: [id])
+  equipo                 Equipo              @relation(fields: [equipoId], references: [id])
+  solicitud              Solicitud?          @relation(fields: [solicitudId], references: [id])
+  tecnico                Usuario?            @relation("TecnicoOrden", fields: [tecnicoId], references: [id])
+  pagos                  Pago[]
+  presupuesto            Presupuesto?
+  repuestos              RepuestoUtilizado[]
+
+  @@index([clienteId, estado])
+  @@index([tecnicoId, estado])
+}
+
+model Diagnostico {
+  id                  String       @id @default(cuid())
+  ordenId             String
+  tecnicoId           String
+  descripcionProblema String
+  pruebasRealizadas   String?
+  recomendacion       String?
+  creadoEn            DateTime     @default(now())
+  orden               OrdenTrabajo @relation(fields: [ordenId], references: [id])
+  tecnico             Usuario      @relation(fields: [tecnicoId], references: [id])
+}
+
+model HistorialEstado {
+  id             String       @id @default(cuid())
+  ordenId        String
+  usuarioId      String
+  estadoAnterior EstadoOrden?
+  estadoNuevo    EstadoOrden
+  observacion    String?
+  creadoEn       DateTime     @default(now())
+  orden          OrdenTrabajo @relation(fields: [ordenId], references: [id])
+  usuario        Usuario      @relation(fields: [usuarioId], references: [id])
+
+  @@index([ordenId, creadoEn])
+}
+
+model Presupuesto {
+  id         String            @id @default(cuid())
+  ordenId    String            @unique
+  estado     EstadoPresupuesto @default(BORRADOR)
+  subtotal   Decimal           @db.Decimal(10, 2)
+  descuento  Decimal           @default(0) @db.Decimal(10, 2)
+  total      Decimal           @db.Decimal(10, 2)
+  aprobadoEn DateTime?
+  creadoEn   DateTime          @default(now())
+  orden      OrdenTrabajo      @relation(fields: [ordenId], references: [id])
+}
+
+model Pago {
+  id            String       @id @default(cuid())
+  ordenId       String
+  monto         Decimal      @db.Decimal(10, 2)
+  metodo        MetodoPago
+  referencia    String?
+  observacion   String?
+  registradoPor String
+  creadoEn      DateTime     @default(now())
+  orden         OrdenTrabajo @relation(fields: [ordenId], references: [id])
+
+  @@index([ordenId, creadoEn])
+}
+
+model MovimientoInventario {
+  id         String         @id @default(cuid())
+  productoId String
+  tipo       TipoMovimiento
+  cantidad   Int
+  motivo     String
+  usuarioId  String
+  creadoEn   DateTime       @default(now())
+  producto   Producto       @relation(fields: [productoId], references: [id])
+
+  @@index([productoId, creadoEn])
+}
+
+model RepuestoUtilizado {
+  id             String       @id @default(cuid())
+  ordenId        String
+  productoId     String
+  cantidad       Int
+  precioUnitario Decimal      @db.Decimal(10, 2)
+  creadoEn       DateTime     @default(now())
+  orden          OrdenTrabajo @relation(fields: [ordenId], references: [id])
+  producto       Producto     @relation(fields: [productoId], references: [id])
+}
+
+model Garantia {
+  id          String       @id @default(cuid())
+  ordenId     String       @unique
+  codigo      String       @unique
+  condiciones String
+  inicio      DateTime
+  fin         DateTime
+  creadaEn    DateTime     @default(now())
+  orden       OrdenTrabajo @relation(fields: [ordenId], references: [id])
+}
+
+model Notificacion {
+  id        String   @id @default(cuid())
+  usuarioId String
+  titulo    String
+  mensaje   String
+  leida     Boolean  @default(false)
+  creadoEn  DateTime @default(now())
+
+  @@index([usuarioId, leida])
+}
+
+model Opinion {
+  id            String   @id @default(cuid())
+  nombreVisible String
+  puntuacion    Int
+  comentario    String?
+  aprobada      Boolean  @default(false)
+  creadoEn      DateTime @default(now())
+}
+
+enum Rol {
+  ADMINISTRADOR
+  TECNICO
+  CLIENTE
+}
+
+enum EstadoSolicitud {
+  RECIBIDA
+  EN_REVISION
+  CONVERTIDA
+  RECHAZADA
+}
+
+enum EstadoOrden {
+  RECIBIDO
+  EN_DIAGNOSTICO
+  PRESUPUESTO_PENDIENTE
+  PRESUPUESTO_APROBADO
+  EN_REPARACION
+  EN_PRUEBAS
+  FINALIZADO
+  LISTO_PARA_ENTREGA
+  ENTREGADO
+  CANCELADO
+}
+
+enum TipoMovimiento {
+  ENTRADA
+  SALIDA
+  AJUSTE
+}
+
+enum EstadoPresupuesto {
+  BORRADOR
+  ENVIADO
+  APROBADO
+  RECHAZADO
+  VENCIDO
+}
+
+enum MetodoPago {
+  EFECTIVO
+  TRANSFERENCIA
+  QR
+  OTRO
+}

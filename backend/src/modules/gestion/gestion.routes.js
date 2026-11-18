@@ -1,0 +1,21 @@
+import { Router } from 'express';
+import rateLimit from 'express-rate-limit';
+import { requireAuth } from '../../middlewares/auth.middleware.js';
+import { requireRoles } from '../../middlewares/roles.middleware.js';
+import * as c from './gestion.controller.js';
+const r=Router();
+const publicWriteLimit=rateLimit({windowMs:15*60*1000,limit:12,standardHeaders:true,legacyHeaders:false,message:{success:false,message:'Demasiadas solicitudes. Inténtalo más tarde.'}});
+// Endpoints públicos de catálogo, opiniones y seguimiento.
+r.post('/solicitudes',publicWriteLimit,c.createPublicRequest); r.get('/catalogo',c.listCatalog); r.post('/opiniones',publicWriteLimit,c.createOpinion); r.get('/opiniones',c.publicOpinions); r.get('/seguimiento',rateLimit({windowMs:15*60*1000,limit:60,standardHeaders:true,legacyHeaders:false}),c.publicTracking);
+r.use(requireAuth);
+r.get('/notificaciones',c.listNotifications); r.patch('/notificaciones/:id/leida',c.readNotification);
+r.get('/ordenes/:ordenId/pagos',requireRoles('ADMINISTRADOR','TECNICO','CLIENTE'),c.listPayments);
+r.post('/ordenes/:ordenId/pagos',requireRoles('ADMINISTRADOR'),c.addPayment);
+r.post('/ordenes/:ordenId/presupuesto/decision',requireRoles('CLIENTE','ADMINISTRADOR'),c.decideBudget);
+r.get('/ordenes/:ordenId/garantia',requireRoles('ADMINISTRADOR','CLIENTE'),c.getWarranty);
+r.post('/ordenes/:ordenId/repuestos',requireRoles('ADMINISTRADOR','TECNICO'),c.usePart);
+r.get('/usuarios',requireRoles('ADMINISTRADOR'),c.listUsers); r.post('/usuarios',requireRoles('ADMINISTRADOR'),c.createStaff); r.post('/usuarios/cuenta-cliente',requireRoles('ADMINISTRADOR'),c.linkCustomerAccount); r.patch('/usuarios/:id/activo',requireRoles('ADMINISTRADOR'),c.setUserActive);
+r.post('/categorias',requireRoles('ADMINISTRADOR'),c.createCategory); r.post('/servicios',requireRoles('ADMINISTRADOR'),c.createService); r.post('/productos',requireRoles('ADMINISTRADOR'),c.createProduct); r.get('/productos',requireRoles('ADMINISTRADOR','TECNICO'),c.listProducts); r.post('/inventario/movimientos',requireRoles('ADMINISTRADOR'),c.moveStock);
+r.post('/presupuestos',requireRoles('ADMINISTRADOR'),c.createBudget); r.post('/ordenes/:ordenId/garantia',requireRoles('ADMINISTRADOR'),c.createWarranty);
+r.post('/notificaciones',requireRoles('ADMINISTRADOR'),c.notifyUser); r.patch('/opiniones/:id/moderacion',requireRoles('ADMINISTRADOR'),c.moderateOpinions); r.get('/reportes/dashboard',requireRoles('ADMINISTRADOR'),c.reportDashboard);
+export default r;

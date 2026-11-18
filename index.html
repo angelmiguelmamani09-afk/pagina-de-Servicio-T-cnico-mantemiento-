@@ -4,35 +4,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b1f4d">
+  <meta name="theme-color" content="#101b32">
+  <meta name="color-scheme" content="light dark">
   <meta name="description"
     content="Servicio técnico especializado en computadoras y laptops. Mantenimiento y reparación desde 2018.">
-  <title>TecnoFix - Servicio Técnico</title>
-  <link rel="stylesheet" href="estilos.css?v=2">
+  <title>TecnoFix | Servicio técnico y mantenimiento de computadoras</title>
+
+  <!-- Tipografía: Inter. Si no carga (sin internet), el navegador usa la fuente del sistema. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+  <link rel="stylesheet" href="estilos.css?v=4">
+  <link rel="stylesheet" href="premium-layer.css?v=1">
 </head>
 
 <body>
 
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
   <!-- ── HEADER: identidad y navegación principal ────────────────────── -->
   <header class="topbar">
     <a class="marca" href="#inicio"><span class="logo" aria-hidden="true">TF</span><span>TecnoFix</span></a>
-    <button id="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-movil">☰ Menú</button>
+    <div class="topbar-acciones">
+      <button id="tema-toggle" class="boton" type="button" aria-pressed="false" title="Cambiar entre modo claro y oscuro">Modo oscuro</button>
+      <button id="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-movil" aria-label="Abrir o cerrar el menú de navegación">☰ Menú</button>
+    </div>
     <nav id="menu-movil" aria-label="Navegación principal">
       <ul>
         <li><a href="#productos">Servicios</a></li>
         <li><a href="#taller">Mi pedido</a></li>
         <li><a href="#precios">Precios</a></li>
-        <li><a href="#solicitud">Solicitar</a></li>
+        <li><a class="nav-cta" href="#solicitud">Solicitar</a></li>
         <li><a href="#panel">Preguntas</a></li>
         <li><a href="#ubicacion">Ubicación</a></li>
       </ul>
     </nav>
   </header>
 
-  <section class="hero" id="inicio">
+  <section class="hero" id="inicio" aria-labelledby="titulo-principal">
     <div class="hero-contenido">
       <p class="hero-etiqueta">Colquencha · Provincia Aroma</p>
-      <h1>Tu computadora, <span>como nueva</span></h1>
+      <h1 id="titulo-principal">Tu computadora, <span>como nueva</span></h1>
       <p class="tagline">Mantenimiento, reparación y soporte técnico para computadoras y laptops. Atención rápida y con garantía.</p>
       <div class="hero-acciones">
         <a class="btn btn-primario" href="#solicitud">Solicitar servicio</a>
@@ -47,25 +61,55 @@
   </section>
 
   <!-- ── MAIN: el contenido propio de esta página ────────────────────── -->
-  <main>
+  <main id="contenido">
     <div class="contenido-bloque">
+
+      <!-- ── CÓMO TRABAJAMOS ───────────────────────────────────────────── -->
+      <section id="proceso" class="proceso">
+        <h2>Cómo trabajamos</h2>
+        <ol class="pasos">
+          <li>
+            <h3>Cuéntanos la falla</h3>
+            <p>Elige el servicio en esta página o escríbenos por WhatsApp.</p>
+          </li>
+          <li>
+            <h3>Diagnóstico y presupuesto</h3>
+            <p>Revisamos tu equipo y confirmamos el presupuesto por teléfono.</p>
+          </li>
+          <li>
+            <h3>Reparación y entrega</h3>
+            <p>Mantenimiento en 24 horas hábiles y 30 días de garantía en mano de obra.</p>
+          </li>
+        </ol>
+      </section>
 
       <!-- ── SECCIÓN DE PRODUCTOS CON BUSCADOR Y FILTROS ───────────────────── -->
       <section id="productos">
         <h2>Nuestros servicios y productos</h2>
 
-        <!-- Buscador que interactúa con eventos.js -->
-        <p>
-          <label for="buscador" class="visualmente-oculto">Buscar servicio o producto</label>
-          <input type="text" id="buscador" placeholder="Buscar por nombre..." autocomplete="off">
-        </p>
+        <div class="catalogo-barra">
+          <!-- Buscador que interactúa con eventos.js -->
+          <p class="campo-buscador">
+            <label for="buscador" class="visualmente-oculto">Buscar servicio o producto</label>
+            <svg class="icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="text" id="buscador" placeholder="Buscar por nombre..." autocomplete="off">
+          </p>
 
-        <!-- Botones de filtro de categorías para eventos.js -->
-        <div id="filtros">
-          <button type="button" class="boton activo" data-categoria="todos">Todos</button>
-          <button type="button" class="boton" data-categoria="servicios">Servicios</button>
-          <button type="button" class="boton" data-categoria="repuestos">Repuestos</button>
-          <button type="button" class="boton" data-categoria="accesorios">Accesorios</button>
+          <!-- Botones de filtro de categorías para eventos.js -->
+          <div id="filtros">
+            <button type="button" class="boton activo" data-categoria="todos">Todos</button>
+            <button type="button" class="boton" data-categoria="servicios">Servicios</button>
+            <button type="button" class="boton" data-categoria="repuestos">Repuestos</button>
+            <button type="button" class="boton" data-categoria="accesorios">Accesorios</button>
+          </div>
+          <!-- Orden del catálogo: lo guarda preferencias.js y lo aplica eventos.js -->
+          <p class="campo-orden">
+            <label for="orden">Ordenar por</label>
+            <select id="orden">
+              <option value="nombre">Nombre (A-Z)</option>
+              <option value="precio">Precio (menor a mayor)</option>
+            </select>
+          </p>
         </div>
 
         <!-- Mensaje y contador dinámico para eventos.js -->
@@ -75,15 +119,15 @@
         <div id="lista-productos"></div>
       </section>
 
-<!-- ── TABLERO DEL CLIENTE: ARMA TU PEDIDO (Día 14: Drag & Drop y Canvas) ─ -->
-      <section id="taller">
+      <!-- ── TABLERO DEL CLIENTE: ARMA TU PEDIDO (Día 14: Drag & Drop y Canvas) ─ -->
+      <section id="taller" class="configurador">
         <h2>Arma tu pedido</h2>
-        <p class="intro">Arrastra los servicios y repuestos que quieras a <strong>Mi pedido</strong>. Puedes cambiar la cantidad, escribir un detalle (por ejemplo, otra memoria RAM) y quitar lo que no necesites. En el celular usa las flechas ◀ ▶. Se guarda en este navegador.</p>
+        <p class="intro">Arrastra los servicios y repuestos que quieras a <strong>Mi pedido</strong>. Puedes cambiar la cantidad, escribir un detalle (por ejemplo, otra memoria RAM) y quitar lo que no necesites. En el celular usa las flechas de cada ficha. Se guarda en este navegador.</p>
         <div id="tablero" class="tablero">
-          <div class="columna" data-columna="disponibles"><h3>🛍️ Disponibles</h3><ul class="lista-columna"></ul><p class="total"></p></div>
-          <div class="columna" data-columna="pedido"><h3>🧾 Mi pedido</h3><ul class="lista-columna"></ul><p class="total"></p></div>
+          <div class="columna" data-columna="disponibles"><h3><svg class="icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 7h12l1 13H5L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Disponibles</h3><ul class="lista-columna"></ul><p class="total"></p></div>
+          <div class="columna" data-columna="pedido"><h3><svg class="icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 3h10v18l-2.5-1.5L12 21l-2.5-1.5L7 21V3Z"/><path d="M10 8h4M10 12h4"/></svg>Mi pedido</h3><ul class="lista-columna"></ul><p class="total"></p></div>
           <div class="columna columna-redondos" aria-label="Lo que elegiste">
-            <h3>✅ Tu selección</h3>
+            <h3><svg class="icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></svg>Tu selección</h3>
             <p id="redondos-vacio" class="redondos-vacio">Aún no elegiste nada. Lo que agregues a <strong>Mi pedido</strong> aparecerá aquí.</p>
             <ul id="redondos" class="redondos"></ul>
             <p id="redondos-total" class="total"></p>
@@ -106,94 +150,105 @@
       <section id="precios">
         <h2>Horarios y precios</h2>
 
-        <table>
-          <caption>Lista de servicios y disponibilidad de atención</caption>
-          <thead>
-            <tr>
-              <th scope="col">Servicio</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Disponible</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mantenimiento preventivo</td>
-              <td>Bs 100.00</td>
-              <td>Todos los días</td>
-            </tr>
-            <tr>
-              <td>Formateo e instalación</td>
-              <td>Bs 70.00</td>
-              <td>Todos los días</td>
-            </tr>
-            <tr>
-              <td>Diagnóstico especializado</td>
-              <td>Bs 50.00</td>
-              <td>Lunes y jueves</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="precios-grid">
+          <div class="tabla-scroll">
+            <table>
+              <caption>Lista de servicios y disponibilidad de atención</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Servicio</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Disponible</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Mantenimiento preventivo</td>
+                  <td>Bs 100.00</td>
+                  <td>Todos los días</td>
+                </tr>
+                <tr>
+                  <td>Formateo e instalación</td>
+                  <td>Bs 70.00</td>
+                  <td>Todos los días</td>
+                </tr>
+                <tr>
+                  <td>Diagnóstico especializado</td>
+                  <td>Bs 50.00</td>
+                  <td>Lunes y jueves</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        <!-- ── FIGURE e IMG ──────────────────────────────────────────── -->
-        <figure>
-          <img src="taller.jpg" alt="Taller de reparación con herramientas y placas base en mesa de trabajo" width="600"
-            height="400">
-          <figcaption>Nuestro taller equipado a primera hora de la mañana.</figcaption>
-        </figure>
+          <!-- ── FIGURE e IMG ──────────────────────────────────────────── -->
+          <figure>
+            <img src="taller.jpg" alt="Taller de reparación con herramientas y placas base en mesa de trabajo" width="600"
+              height="400" loading="lazy">
+            <figcaption>Nuestro taller equipado a primera hora de la mañana.</figcaption>
+          </figure>
+        </div>
       </section>
 
       <!-- ── FORMULARIO ACCESIBLE ──────────────────────────────────────── -->
       <section id="solicitud">
         <h2>Solicitar un servicio</h2>
+        <p class="intro">Completa tus datos y abrimos WhatsApp con la solicitud lista para enviar.</p>
 
         <form id="form-solicitud">
 
           <fieldset>
             <legend>Tus datos</legend>
 
-            <p>
+            <p class="campo campo-ancho">
               <label for="nombre">Nombre completo</label>
               <input type="text" id="nombre" name="nombre" autocomplete="name" required>
             </p>
 
-            <p>
+            <p class="campo">
               <label for="email">Correo electrónico</label>
               <input type="email" id="email" name="email" autocomplete="email" required>
             </p>
 
-            <p>
+            <p class="campo">
               <label for="telefono">Teléfono</label>
               <input type="tel" id="telefono" name="telefono" autocomplete="tel" pattern="[0-9]{7,8}"
                 title="7 u 8 dígitos, sin espacios">
             </p>
           </fieldset>
 
+          <div class="form-ayuda">
+            <h3>¿Prefieres hablar directo?</h3>
+            <p>Escríbenos por WhatsApp o llámanos al <a href="tel:+59168009791">680 097 91</a>.</p>
+            <a class="btn btn-claro" href="https://wa.me/59168009791" target="_blank" rel="noopener">Abrir WhatsApp</a>
+          </div>
+
           <fieldset>
             <legend>Tu equipo</legend>
 
-            <p>
+            <p class="campo campo-ancho">
               <label for="servicio">Servicio requerido</label>
               <select id="servicio" name="servicio" required>
                 <option value="">Elige uno</option>
               </select>
             </p>
 
-            <p>
+            <p class="campo">
               <label for="cantidad">Cantidad de equipos</label>
               <input type="number" id="cantidad" name="cantidad" min="1" max="100" value="1" required>
             </p>
 
-            <p>
+            <p class="campo">
               <label for="fecha">Fecha de recepción</label>
               <input type="date" id="fecha" name="fecha" required>
             </p>
 
-            <p>
+            <p class="campo campo-ancho">
               <label for="notas">Detalle de la falla</label>
               <textarea id="notas" name="notas" rows="3"></textarea>
             </p>
 
-            <p>
+            <p class="campo campo-ancho campo-check">
               <input type="checkbox" id="terminos" name="terminos" required>
               <label for="terminos">Acepto que el presupuesto se confirma por teléfono</label>
             </p>
@@ -285,8 +340,9 @@
           <div class="ubicacion-datos">
             <h3>TecnoFix · Colquencha</h3>
             <p>A media cuadra de la plaza principal 15 de agosto.</p>
+            <p class="ubicacion-telefono">Teléfono: <a href="tel:+59168009791">680 097 91</a></p>
             <div class="acciones">
-              <button id="ubicarme" class="btn btn-primario" type="button">📍 ¿Qué tan lejos estoy?</button>
+              <button id="ubicarme" class="btn btn-primario" type="button"><svg class="icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>¿Qué tan lejos estoy?</button>
               <a id="como-llegar" class="btn btn-claro" target="_blank" rel="noopener"
                 href="https://www.google.com/maps/dir/?api=1&destination=-16.9328711,-68.2484889">Cómo llegar</a>
               <a class="btn btn-claro" target="_blank" rel="noopener" href="https://wa.me/59168009791">WhatsApp</a>
@@ -295,20 +351,14 @@
           </div>
         </div>
 
-        <h3 class="subtitulo">Preferencias de la página</h3>
-        <p class="intro">Se guardan en este navegador y siguen ahí cuando recargas.</p>
-        <div class="controles-preferencias">
-          <button id="tema-toggle" class="boton" type="button" aria-pressed="false">Modo oscuro</button>
-          <p class="campo-orden">
-            <label for="orden">Ordenar el catálogo por</label>
-            <select id="orden">
-              <option value="nombre">Nombre (A-Z)</option>
-              <option value="precio">Precio (menor a mayor)</option>
-            </select>
-          </p>
-          <button id="olvidar" class="boton boton-error" type="button">Olvidar preferencias</button>
+        <div class="prefs">
+          <h3 class="subtitulo">Preferencias de la página</h3>
+          <p class="intro">Se guardan en este navegador y siguen ahí cuando recargas.</p>
+          <div class="controles-preferencias">
+            <button id="olvidar" class="boton boton-error" type="button">Olvidar preferencias</button>
+          </div>
+          <p id="estado-prefs" role="status" aria-live="polite"></p>
         </div>
-        <p id="estado-prefs" role="status" aria-live="polite"></p>
       </section>
     </div>
   </main>
@@ -319,18 +369,43 @@
   </aside>
 
   <footer>
-    <h2>Dónde estamos</h2>
-    <address>
-      <figure>
-        <img src="ubicacion.jpg" alt="Ubicación de TecnoFix en Colquencha, a media cuadra de la plaza principal"
-          width="470" height="556">
-      </figure>
-      Provincia Aroma Localidad Colquencha<br>
-      A media cuadra de la plaza principal 15 de agosto<br>
-      Teléfono: <a href="tel:+59168009791">680 097 91</a>
-    </address>
-    <p><small>&copy; 2026 TecnoFix Servicio Técnico</small></p>
+    <div class="pie-grid">
+      <div class="pie-marca">
+        <a class="marca" href="#inicio"><span class="logo" aria-hidden="true">TF</span><span>TecnoFix</span></a>
+        <p>Servicio técnico de computadoras y laptops en Colquencha. Mantenimiento y reparación desde 2018.</p>
+      </div>
+
+      <nav class="pie-enlaces" aria-label="Accesos rápidos">
+        <h2>Accesos rápidos</h2>
+        <ul>
+          <li><a href="#productos">Servicios</a></li>
+          <li><a href="#taller">Mi pedido</a></li>
+          <li><a href="#precios">Precios</a></li>
+          <li><a href="#solicitud">Solicitar</a></li>
+          <li><a href="#panel">Preguntas</a></li>
+          <li><a href="#ubicacion">Ubicación</a></li>
+        </ul>
+      </nav>
+
+      <div class="pie-donde">
+        <h2>Dónde estamos</h2>
+        <address>
+          <figure>
+            <img src="ubicacion.jpg" alt="Ubicación de TecnoFix en Colquencha, a media cuadra de la plaza principal"
+              width="470" height="556" loading="lazy">
+          </figure>
+          Provincia Aroma Localidad Colquencha<br>
+          A media cuadra de la plaza principal 15 de agosto<br>
+          Teléfono: <a href="tel:+59168009791">680 097 91</a>
+        </address>
+      </div>
+    </div>
+    <p class="pie-copy"><small>&copy; 2026 TecnoFix Servicio Técnico</small></p>
   </footer>
+
+  <a class="flotante-wa" href="https://wa.me/59168009791" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 11.5a8 8 0 0 1-11.9 7L4 19.5l1.1-4A8 8 0 1 1 20 11.5z"/><path d="M9.2 8.8c.2 2.4 2.6 4.8 5 5l1-1.2-1.6-.9-.8.6c-.8-.3-1.6-1.1-1.9-1.9l.6-.8-.9-1.6-1.4.8z"/></svg>
+  </a>
 
   <!-- Carga de librerías y scripts del proyecto -->
   <script src="jquery-3.7.1.min.js"></script>

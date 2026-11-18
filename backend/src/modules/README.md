@@ -1,0 +1,1 @@
+Módulos previstos: auth, usuarios, clientes, equipos, servicios, solicitudes, reparaciones, inventario, pagos, garantías, notificaciones y reportes. Cada módulo tendrá routes, controller, service y validation.
